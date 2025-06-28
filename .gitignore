@@ -6,3 +6,23 @@
 *.db
 *.so
 *.pack
+# Poids lourds et modèles à ignorer
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.tar
+*.dic
+*.db
+*.so
+*.pack
+*.zip
+*.h5
+*.npy
+*.npz
+*.pickle
+*.joblib
+*.onnx
+# GPU libs
+lib/*
+site-packages/*
