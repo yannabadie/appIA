@@ -1,0 +1,17 @@
+name: Migrate Existing Issues to Project
+
+on:
+  workflow_dispatch:
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add all issues to ProjectV2
+        uses: actions/add-to-project@v0.5.0
+        with:
+          project-url: https://github.com/users/yannabadie/projects/2
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          # Ajoute toutes les issues ouvertes, ferme ou adapte selon besoin
+          include-issues: true
+          include-pull-requests: false
