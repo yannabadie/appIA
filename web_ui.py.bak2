@@ -1,0 +1,77 @@
+import gradio as gr
+from agent_core import ask_agent
+import os
+
+def ensure_gradio_history(history):
+    """
+    Corrige/convertit n'importe quel historique en format Gradio 4+.
+    """
+    out = []
+    if not history:
+        return []
+    for h in history:
+        if isinstance(h, dict) and "role" in h and "content" in h:
+            out.append(h)
+        elif isinstance(h, tuple) and len(h) == 2:
+            if h[0] in ("user", "assistant", "system"):
+                out.append({"role": h[0], "content": h[1]})
+            else:
+                out.append({"role": "user", "content": str(h[0])})
+                out.append({"role": "assistant", "content": str(h[1])})
+        elif isinstance(h, str):
+            out.append({"role": "user", "content": h})
+        else:
+            out.append({"role": "assistant", "content": str(h)})
+    return out
+
+
+memory_mode = gr.Radio(["local", "supabase"], label="Mémoire", value="local")
+user_id = gr.Textbox(label="Utilisateur", value="default")
+canvas = gr.Textbox(label="Canevas/scénario (optionnel)")
+
+def respond(
+message, multimodal, history):
+    try:
+        # Assure le bon format d'historique
+        gradio_history = ensure_gradio_history(history)
+        # Multimodal placeholder (non implémenté)
+        if multimodal:
+            answer = "🔄 (Module multimodal non encore implémenté)"
+        else:
+            answer = ask_agent(message, history=gradio_history)
+        gradio_history.append({"role": "user", "content": message})
+        gradio_history.append({"role": "assistant", "content": answer})
+        if tts: speak(answer)
+        return gradio_history, ""
+    except Exception as e:
+        gradio_history.append({"role": "assistant", "content": f"Erreur : {e}"})
+        if tts: speak(answer)
+        return gradio_history, ""
+
+with gr.Blocks(theme=gr.themes.Base(), css="footer {display: none;}") as demo:
+    gr.Markdown("# 🤖 Jarvis IA – Double Numérique", elem_id="title")
+
+    # Patch : widgets mémoire/canevas/user/TTS (à plat)
+    memory_mode = gr.Radio(["local", "supabase"], label="Mémoire", value="local")
+    user_id = gr.Textbox(label="Utilisateur", value="default")
+    canvas = gr.Textbox(label="Canevas/scénario (optionnel)")
+    tts = gr.Checkbox(label="TTS (synthèse vocale)", value=False)
+    chatbot = gr.Chatbot(label="Chatbot", type="messages", avatar_images=["🤖", "👤"])
+    prompt = gr.Textbox(label="Votre message...", placeholder="Posez une question à Jarvis", autofocus=True)
+    multimodal = gr.Checkbox(label="Multimodal (texte+image)", value=False)
+    send = gr.Button("Envoyer")
+    tts = gr.Checkbox(label='TTS (synthèse vocale)', value=False)
+    clear = gr.Button("🧹 Effacer l'historique")
+
+    send.click(fn=respond, inputs=[prompt, multimodal, chatbot, memory_mode, user_id, canvas, tts], outputs=[chatbot, prompt],
+        show_progress="full"
+    )
+    clear.click(lambda: ([], ""), outputs=[chatbot, prompt])
+
+demo.launch(server_port=int(os.getenv('UI_PORT',7860),), server_name='0.0.0.0')
+
+import pyttsx3
+def speak(text):
+    engine = pyttsx3.init()
+    engine.say(text)
+    engine.runAndWait()

@@ -1,0 +1,6 @@
+openai
+python-dotenv
+sounddevice
+TTS
+Flask
+# Ajoute ici tes dépendances

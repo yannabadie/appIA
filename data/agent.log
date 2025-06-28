@@ -1,0 +1,200 @@
+2025-06-23 20:50:59,583 [INFO] Serving on http://0.0.0.0:5000
+2025-06-23 20:51:04,198 [DEBUG] Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'idempotency_key': 'stainless-python-retry-b03dd9b5-0fa4-4b19-9a55-83c40a085c45', 'json_data': {'messages': [{'role': 'system', 'content': "Tu es l'assistant personnel de Yann Abadieexakis, un Architecte Cloud & Sécurité Microsoft\nObjectifs : Créer et piloter un double numérique intelligent, Automatiser du contenu YouTube/Instagram, Suivre ma forme, ma santé et mes projets IT\nTu disposes d’un accès complet aux outils cloud (Google Drive, OneDrive, Supabase, etc.).\nRéponds toujours de manière claire, proactive, utile et synthétique."}, {'role': 'user', 'content': 'Crée un dossier nommé rapport2025 dans Google Drive'}], 'model': 'gpt-4', 'temperature': 0.7}}
+2025-06-23 20:51:04,208 [DEBUG] Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-06-23 20:51:04,209 [DEBUG] connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=5.0 socket_options=None
+2025-06-23 20:51:04,320 [DEBUG] connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001A16FD08CD0>
+2025-06-23 20:51:04,320 [DEBUG] start_tls.started ssl_context=<ssl.SSLContext object at 0x000001A16F6F7B60> server_hostname='api.openai.com' timeout=5.0
+2025-06-23 20:51:04,382 [DEBUG] start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001A16FD08F10>
+2025-06-23 20:51:04,383 [DEBUG] send_request_headers.started request=<Request [b'POST']>
+2025-06-23 20:51:04,383 [DEBUG] send_request_headers.complete
+2025-06-23 20:51:04,383 [DEBUG] send_request_body.started request=<Request [b'POST']>
+2025-06-23 20:51:04,383 [DEBUG] send_request_body.complete
+2025-06-23 20:51:04,383 [DEBUG] receive_response_headers.started request=<Request [b'POST']>
+2025-06-23 20:51:13,317 [DEBUG] receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 23 Jun 2025 18:51:13 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'yann-outlook'), (b'openai-processing-ms', b'7755'), (b'openai-version', b'2020-10-01'), (b'x-envoy-upstream-service-time', b'8031'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'10000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'9881'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'714ms'), (b'x-request-id', b'req_4b5ae4c078b8ca0e4267077c04a2773b'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'cf-cache-status', b'DYNAMIC'), (b'Set-Cookie', b'__cf_bm=iNPL07tfZ.yRb.9VQ1c4ncFE3fQOlKuE6DVORNdstos-1750704673-1.0.1.1-myAbsgh2ISOZXDEdPzh9Y8cJuVp5b3n_dZb5dnKYMSxctSuuktrO.NHP4hDVvnVuVeucI9hHw3XIXUMzP.jRuzKWnA0CJNSKNz7J4YCQ04c; path=/; expires=Mon, 23-Jun-25 19:21:13 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'X-Content-Type-Options', b'nosniff'), (b'Set-Cookie', b'_cfuvid=eO7c3WIlV4Hz6K3QPD0Ge1jwRfHao0ErrksL6sAB2.I-1750704673173-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'Server', b'cloudflare'), (b'CF-RAY', b'95462cb7aa663c83-CDG'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2025-06-23 20:51:13,318 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-23 20:51:13,318 [DEBUG] receive_response_body.started request=<Request [b'POST']>
+2025-06-23 20:51:13,321 [DEBUG] receive_response_body.complete
+2025-06-23 20:51:13,321 [DEBUG] response_closed.started
+2025-06-23 20:51:13,321 [DEBUG] response_closed.complete
+2025-06-23 20:51:13,321 [DEBUG] HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers([('date', 'Mon, 23 Jun 2025 18:51:13 GMT'), ('content-type', 'application/json'), ('transfer-encoding', 'chunked'), ('connection', 'keep-alive'), ('access-control-expose-headers', 'X-Request-ID'), ('openai-organization', 'yann-outlook'), ('openai-processing-ms', '7755'), ('openai-version', '2020-10-01'), ('x-envoy-upstream-service-time', '8031'), ('x-ratelimit-limit-requests', '10000'), ('x-ratelimit-limit-tokens', '10000'), ('x-ratelimit-remaining-requests', '9999'), ('x-ratelimit-remaining-tokens', '9881'), ('x-ratelimit-reset-requests', '8.64s'), ('x-ratelimit-reset-tokens', '714ms'), ('x-request-id', 'req_4b5ae4c078b8ca0e4267077c04a2773b'), ('strict-transport-security', 'max-age=31536000; includeSubDomains; preload'), ('cf-cache-status', 'DYNAMIC'), ('set-cookie', '__cf_bm=iNPL07tfZ.yRb.9VQ1c4ncFE3fQOlKuE6DVORNdstos-1750704673-1.0.1.1-myAbsgh2ISOZXDEdPzh9Y8cJuVp5b3n_dZb5dnKYMSxctSuuktrO.NHP4hDVvnVuVeucI9hHw3XIXUMzP.jRuzKWnA0CJNSKNz7J4YCQ04c; path=/; expires=Mon, 23-Jun-25 19:21:13 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), ('x-content-type-options', 'nosniff'), ('set-cookie', '_cfuvid=eO7c3WIlV4Hz6K3QPD0Ge1jwRfHao0ErrksL6sAB2.I-1750704673173-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), ('server', 'cloudflare'), ('cf-ray', '95462cb7aa663c83-CDG'), ('content-encoding', 'gzip'), ('alt-svc', 'h3=":443"; ma=86400')])
+2025-06-23 20:51:13,321 [DEBUG] request_id: req_4b5ae4c078b8ca0e4267077c04a2773b
+2025-06-23 20:51:51,478 [DEBUG] Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'idempotency_key': 'stainless-python-retry-fd98605e-dd7c-43cc-b8e9-2a4985a075b0', 'json_data': {'messages': [{'role': 'system', 'content': "Tu es l'assistant personnel de Yann Abadieexakis, un Architecte Cloud & Sécurité Microsoft\nObjectifs : Créer et piloter un double numérique intelligent, Automatiser du contenu YouTube/Instagram, Suivre ma forme, ma santé et mes projets IT\nTu disposes d’un accès complet aux outils cloud (Google Drive, OneDrive, Supabase, etc.).\nRéponds toujours de manière claire, proactive, utile et synthétique."}, {'role': 'user', 'content': 'creer un dossier iatest a la racine du googledrive de yann.abadie@google.com\r\n'}], 'model': 'gpt-4', 'temperature': 0.7}}
+2025-06-23 20:51:51,478 [DEBUG] Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-06-23 20:51:51,478 [DEBUG] close.started
+2025-06-23 20:51:51,480 [DEBUG] close.complete
+2025-06-23 20:51:51,480 [DEBUG] connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=5.0 socket_options=None
+2025-06-23 20:51:51,532 [DEBUG] connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001A16FD1CC90>
+2025-06-23 20:51:51,533 [DEBUG] start_tls.started ssl_context=<ssl.SSLContext object at 0x000001A16F6F7B60> server_hostname='api.openai.com' timeout=5.0
+2025-06-23 20:51:51,560 [DEBUG] start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001A16FD1CCD0>
+2025-06-23 20:51:51,560 [DEBUG] send_request_headers.started request=<Request [b'POST']>
+2025-06-23 20:51:51,560 [DEBUG] send_request_headers.complete
+2025-06-23 20:51:51,560 [DEBUG] send_request_body.started request=<Request [b'POST']>
+2025-06-23 20:51:51,560 [DEBUG] send_request_body.complete
+2025-06-23 20:51:51,560 [DEBUG] receive_response_headers.started request=<Request [b'POST']>
+2025-06-23 20:52:12,454 [DEBUG] receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 23 Jun 2025 18:52:12 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'yann-outlook'), (b'openai-processing-ms', b'20659'), (b'openai-version', b'2020-10-01'), (b'x-envoy-upstream-service-time', b'20664'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'10000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'9875'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'750ms'), (b'x-request-id', b'req_b024f48d3e036bddbdc421452eece447'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'cf-cache-status', b'DYNAMIC'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'cloudflare'), (b'CF-RAY', b'95462dde7808d0ba-CDG'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2025-06-23 20:52:12,454 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-23 20:52:12,455 [DEBUG] receive_response_body.started request=<Request [b'POST']>
+2025-06-23 20:52:12,455 [DEBUG] receive_response_body.complete
+2025-06-23 20:52:12,455 [DEBUG] response_closed.started
+2025-06-23 20:52:12,455 [DEBUG] response_closed.complete
+2025-06-23 20:52:12,456 [DEBUG] HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers({'date': 'Mon, 23 Jun 2025 18:52:12 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'access-control-expose-headers': 'X-Request-ID', 'openai-organization': 'yann-outlook', 'openai-processing-ms': '20659', 'openai-version': '2020-10-01', 'x-envoy-upstream-service-time': '20664', 'x-ratelimit-limit-requests': '10000', 'x-ratelimit-limit-tokens': '10000', 'x-ratelimit-remaining-requests': '9999', 'x-ratelimit-remaining-tokens': '9875', 'x-ratelimit-reset-requests': '8.64s', 'x-ratelimit-reset-tokens': '750ms', 'x-request-id': 'req_b024f48d3e036bddbdc421452eece447', 'strict-transport-security': 'max-age=31536000; includeSubDomains; preload', 'cf-cache-status': 'DYNAMIC', 'x-content-type-options': 'nosniff', 'server': 'cloudflare', 'cf-ray': '95462dde7808d0ba-CDG', 'content-encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'})
+2025-06-23 20:52:12,456 [DEBUG] request_id: req_b024f48d3e036bddbdc421452eece447
+2025-06-23 20:59:21,607 [DEBUG] close.started
+2025-06-23 20:59:21,607 [DEBUG] close.complete
+2025-06-23 21:00:13,766 [INFO] Serving on http://0.0.0.0:5000
+2025-06-23 21:00:18,300 [DEBUG] Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'idempotency_key': 'stainless-python-retry-fa29e12e-3a8f-400e-b6be-ec7f2caa7c7b', 'json_data': {'messages': [{'role': 'system', 'content': "Tu es l'assistant personnel de Yann Abadieexakis, un Architecte Cloud & Sécurité Microsoft\nObjectifs : Créer et piloter un double numérique intelligent, Automatiser du contenu YouTube/Instagram, Suivre ma forme, ma santé et mes projets IT\nTu disposes d’un accès complet aux outils cloud (Google Drive, OneDrive, Supabase, etc.).\nRéponds toujours de manière claire, proactive, utile et synthétique."}, {'role': 'user', 'content': 'creer un dossier iatest a la racine du googledrive de yann.abadie@google.com\r\n'}], 'model': 'gpt-4', 'temperature': 0.7}}
+2025-06-23 21:00:18,311 [DEBUG] Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-06-23 21:00:18,311 [DEBUG] connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=5.0 socket_options=None
+2025-06-23 21:00:18,398 [DEBUG] connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001E099A02E50>
+2025-06-23 21:00:18,398 [DEBUG] start_tls.started ssl_context=<ssl.SSLContext object at 0x000001E0993F7BF0> server_hostname='api.openai.com' timeout=5.0
+2025-06-23 21:00:18,425 [DEBUG] start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001E099A08910>
+2025-06-23 21:00:18,425 [DEBUG] send_request_headers.started request=<Request [b'POST']>
+2025-06-23 21:00:18,426 [DEBUG] send_request_headers.complete
+2025-06-23 21:00:18,426 [DEBUG] send_request_body.started request=<Request [b'POST']>
+2025-06-23 21:00:18,426 [DEBUG] send_request_body.complete
+2025-06-23 21:00:18,426 [DEBUG] receive_response_headers.started request=<Request [b'POST']>
+2025-06-23 21:00:26,838 [DEBUG] receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 23 Jun 2025 19:00:26 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'yann-outlook'), (b'openai-processing-ms', b'7467'), (b'openai-version', b'2020-10-01'), (b'x-envoy-upstream-service-time', b'7474'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'10000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'9875'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'750ms'), (b'x-request-id', b'req_b99b6525bc66afc6b9f8dfce321514df'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'cf-cache-status', b'DYNAMIC'), (b'Set-Cookie', b'__cf_bm=KsFJgRtj68AJcEtEGlpsxZS6gBNJMInKjpnoAFY5eLk-1750705226-1.0.1.1-PI3jPC8buSHJ0Jkr55ntVSy._P4j5OpMAC5woK4pb82l_cAYDpB2Qy2JHyn.JbJmOWZUTEk.QcQhcfReBPSFYdT7OGLKqfqIghGG74rap2w; path=/; expires=Mon, 23-Jun-25 19:30:26 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'X-Content-Type-Options', b'nosniff'), (b'Set-Cookie', b'_cfuvid=gWPFwSkp.DnBe.p3PN_iGFqfOau9usvFSEmN0vt3oFA-1750705226689-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'Server', b'cloudflare'), (b'CF-RAY', b'95463a3e59c39e5d-CDG'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2025-06-23 21:00:26,839 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-23 21:00:26,839 [DEBUG] receive_response_body.started request=<Request [b'POST']>
+2025-06-23 21:00:26,839 [DEBUG] receive_response_body.complete
+2025-06-23 21:00:26,839 [DEBUG] response_closed.started
+2025-06-23 21:00:26,840 [DEBUG] response_closed.complete
+2025-06-23 21:00:26,840 [DEBUG] HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers([('date', 'Mon, 23 Jun 2025 19:00:26 GMT'), ('content-type', 'application/json'), ('transfer-encoding', 'chunked'), ('connection', 'keep-alive'), ('access-control-expose-headers', 'X-Request-ID'), ('openai-organization', 'yann-outlook'), ('openai-processing-ms', '7467'), ('openai-version', '2020-10-01'), ('x-envoy-upstream-service-time', '7474'), ('x-ratelimit-limit-requests', '10000'), ('x-ratelimit-limit-tokens', '10000'), ('x-ratelimit-remaining-requests', '9999'), ('x-ratelimit-remaining-tokens', '9875'), ('x-ratelimit-reset-requests', '8.64s'), ('x-ratelimit-reset-tokens', '750ms'), ('x-request-id', 'req_b99b6525bc66afc6b9f8dfce321514df'), ('strict-transport-security', 'max-age=31536000; includeSubDomains; preload'), ('cf-cache-status', 'DYNAMIC'), ('set-cookie', '__cf_bm=KsFJgRtj68AJcEtEGlpsxZS6gBNJMInKjpnoAFY5eLk-1750705226-1.0.1.1-PI3jPC8buSHJ0Jkr55ntVSy._P4j5OpMAC5woK4pb82l_cAYDpB2Qy2JHyn.JbJmOWZUTEk.QcQhcfReBPSFYdT7OGLKqfqIghGG74rap2w; path=/; expires=Mon, 23-Jun-25 19:30:26 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), ('x-content-type-options', 'nosniff'), ('set-cookie', '_cfuvid=gWPFwSkp.DnBe.p3PN_iGFqfOau9usvFSEmN0vt3oFA-1750705226689-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), ('server', 'cloudflare'), ('cf-ray', '95463a3e59c39e5d-CDG'), ('content-encoding', 'gzip'), ('alt-svc', 'h3=":443"; ma=86400')])
+2025-06-23 21:00:26,840 [DEBUG] request_id: req_b99b6525bc66afc6b9f8dfce321514df
+2025-06-23 21:00:54,740 [ERROR] Erreur initialisation drive: Fichier d'identifiants introuvable : data/google_creds.json
+2025-06-23 21:08:56,984 [DEBUG] close.started
+2025-06-23 21:08:56,985 [DEBUG] close.complete
+2025-06-23 21:13:06,990 [INFO] Serving on http://0.0.0.0:5000
+2025-06-23 21:13:30,698 [DEBUG] URL being requested: POST https://www.googleapis.com/drive/v3/files?fields=id&alt=json
+2025-06-23 21:13:30,699 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-06-23 21:13:53,935 [DEBUG] URL being requested: POST https://www.googleapis.com/drive/v3/files?fields=id&alt=json
+2025-06-23 21:13:53,935 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-06-23 21:14:56,143 [DEBUG] Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'idempotency_key': 'stainless-python-retry-09cc3d73-4dc8-4463-8e1e-67eb87499b1d', 'json_data': {'messages': [{'role': 'system', 'content': "Tu es l'assistant personnel de Yann Abadieexakis, un Architecte Cloud & Sécurité Microsoft\nObjectifs : Créer et piloter un double numérique intelligent, Automatiser du contenu YouTube/Instagram, Suivre ma forme, ma santé et mes projets IT\nTu disposes d’un accès complet aux outils cloud (Google Drive, OneDrive, Supabase, etc.).\nRéponds toujours de manière claire, proactive, utile et synthétique."}, {'role': 'user', 'content': 'fais le dans le google drive de yann.abadie@gmail.com\r\n'}], 'model': 'gpt-4', 'temperature': 0.7}}
+2025-06-23 21:14:56,154 [DEBUG] Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-06-23 21:14:56,154 [DEBUG] connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=5.0 socket_options=None
+2025-06-23 21:14:56,246 [DEBUG] connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001CC97841B90>
+2025-06-23 21:14:56,246 [DEBUG] start_tls.started ssl_context=<ssl.SSLContext object at 0x000001CC971F7AD0> server_hostname='api.openai.com' timeout=5.0
+2025-06-23 21:14:56,274 [DEBUG] start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001CC9783F510>
+2025-06-23 21:14:56,274 [DEBUG] send_request_headers.started request=<Request [b'POST']>
+2025-06-23 21:14:56,274 [DEBUG] send_request_headers.complete
+2025-06-23 21:14:56,274 [DEBUG] send_request_body.started request=<Request [b'POST']>
+2025-06-23 21:14:56,275 [DEBUG] send_request_body.complete
+2025-06-23 21:14:56,275 [DEBUG] receive_response_headers.started request=<Request [b'POST']>
+2025-06-23 21:14:59,991 [DEBUG] receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 23 Jun 2025 19:14:59 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'yann-outlook'), (b'openai-processing-ms', b'3124'), (b'openai-version', b'2020-10-01'), (b'x-envoy-upstream-service-time', b'3131'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'10000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'9881'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'714ms'), (b'x-request-id', b'req_a6c3d76e52ab7bc7d126ecf49e0ccb33'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'cf-cache-status', b'DYNAMIC'), (b'Set-Cookie', b'__cf_bm=N5uF7refuoamQa9DttIDPEWfaT62oekP8L2JrljehzA-1750706099-1.0.1.1-G7cs1pGMgqOZqF1So5OJIWGJmyKfsxZTFOuHEl2IB6KVdvmsWDEnMw93MYJ2OTcuPDZArqtrCt12jQQdYp6TUbbb1136kqnPX9busQ0ea3c; path=/; expires=Mon, 23-Jun-25 19:44:59 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'X-Content-Type-Options', b'nosniff'), (b'Set-Cookie', b'_cfuvid=.ATBzN.9vPLsCFELS1kiJk.zlYUwaH9foBA3f338rSE-1750706099821-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'Server', b'cloudflare'), (b'CF-RAY', b'95464facdde7bb63-CDG'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2025-06-23 21:14:59,992 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-23 21:14:59,993 [DEBUG] receive_response_body.started request=<Request [b'POST']>
+2025-06-23 21:14:59,993 [DEBUG] receive_response_body.complete
+2025-06-23 21:14:59,993 [DEBUG] response_closed.started
+2025-06-23 21:14:59,993 [DEBUG] response_closed.complete
+2025-06-23 21:14:59,993 [DEBUG] HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers([('date', 'Mon, 23 Jun 2025 19:14:59 GMT'), ('content-type', 'application/json'), ('transfer-encoding', 'chunked'), ('connection', 'keep-alive'), ('access-control-expose-headers', 'X-Request-ID'), ('openai-organization', 'yann-outlook'), ('openai-processing-ms', '3124'), ('openai-version', '2020-10-01'), ('x-envoy-upstream-service-time', '3131'), ('x-ratelimit-limit-requests', '10000'), ('x-ratelimit-limit-tokens', '10000'), ('x-ratelimit-remaining-requests', '9999'), ('x-ratelimit-remaining-tokens', '9881'), ('x-ratelimit-reset-requests', '8.64s'), ('x-ratelimit-reset-tokens', '714ms'), ('x-request-id', 'req_a6c3d76e52ab7bc7d126ecf49e0ccb33'), ('strict-transport-security', 'max-age=31536000; includeSubDomains; preload'), ('cf-cache-status', 'DYNAMIC'), ('set-cookie', '__cf_bm=N5uF7refuoamQa9DttIDPEWfaT62oekP8L2JrljehzA-1750706099-1.0.1.1-G7cs1pGMgqOZqF1So5OJIWGJmyKfsxZTFOuHEl2IB6KVdvmsWDEnMw93MYJ2OTcuPDZArqtrCt12jQQdYp6TUbbb1136kqnPX9busQ0ea3c; path=/; expires=Mon, 23-Jun-25 19:44:59 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), ('x-content-type-options', 'nosniff'), ('set-cookie', '_cfuvid=.ATBzN.9vPLsCFELS1kiJk.zlYUwaH9foBA3f338rSE-1750706099821-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), ('server', 'cloudflare'), ('cf-ray', '95464facdde7bb63-CDG'), ('content-encoding', 'gzip'), ('alt-svc', 'h3=":443"; ma=86400')])
+2025-06-23 21:14:59,993 [DEBUG] request_id: req_a6c3d76e52ab7bc7d126ecf49e0ccb33
+2025-06-23 21:16:07,500 [DEBUG] close.started
+2025-06-23 21:16:07,501 [DEBUG] close.complete
+2025-06-23 21:26:52,967 [INFO] Serving on http://0.0.0.0:5000
+2025-06-23 21:27:13,427 [DEBUG] Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'idempotency_key': 'stainless-python-retry-2de0ca8c-bd38-48de-a137-55d5df7cf849', 'json_data': {'messages': [{'role': 'system', 'content': "Tu es l'assistant personnel de Yann Abadieexakis, un Architecte Cloud & Sécurité Microsoft\nObjectifs : Créer et piloter un double numérique intelligent, Automatiser du contenu YouTube/Instagram, Suivre ma forme, ma santé et mes projets IT\nTu disposes d’un accès complet aux outils cloud (Google Drive, OneDrive, Supabase, etc.).\nRéponds toujours de manière claire, proactive, utile et synthétique."}, {'role': 'user', 'content': 'fais le dans le google drive de yann.abadie@gmail.com\r\n'}], 'model': 'gpt-4', 'temperature': 0.7}}
+2025-06-23 21:27:13,439 [DEBUG] Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+2025-06-23 21:27:13,439 [DEBUG] connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=5.0 socket_options=None
+2025-06-23 21:27:13,543 [DEBUG] connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000002C45A048950>
+2025-06-23 21:27:13,543 [DEBUG] start_tls.started ssl_context=<ssl.SSLContext object at 0x000002C45A2F7AD0> server_hostname='api.openai.com' timeout=5.0
+2025-06-23 21:27:13,574 [DEBUG] start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000002C45A908B50>
+2025-06-23 21:27:13,574 [DEBUG] send_request_headers.started request=<Request [b'POST']>
+2025-06-23 21:27:13,574 [DEBUG] send_request_headers.complete
+2025-06-23 21:27:13,574 [DEBUG] send_request_body.started request=<Request [b'POST']>
+2025-06-23 21:27:13,574 [DEBUG] send_request_body.complete
+2025-06-23 21:27:13,575 [DEBUG] receive_response_headers.started request=<Request [b'POST']>
+2025-06-23 21:27:17,778 [DEBUG] receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Mon, 23 Jun 2025 19:27:17 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'access-control-expose-headers', b'X-Request-ID'), (b'openai-organization', b'yann-outlook'), (b'openai-processing-ms', b'3805'), (b'openai-version', b'2020-10-01'), (b'x-envoy-upstream-service-time', b'3809'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'10000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'9881'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'714ms'), (b'x-request-id', b'req_dc1526117dbcf042c46a09468fdc99f9'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'cf-cache-status', b'DYNAMIC'), (b'Set-Cookie', b'__cf_bm=7ZSrQ8lJDSBmi3jriO8vqeqq3cx5zaCAYzdCKDqr0QY-1750706837-1.0.1.1-Ju2mpiMXrm_8lpz0Jwqz8xG6rDVvYtP8qo0dpCactHUO3pjbE5AZgdg1gSc.QDbPnVNdp_jjC_NFwjd7.G4_cwjEkGT.ANXizpCNTtF58QQ; path=/; expires=Mon, 23-Jun-25 19:57:17 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'X-Content-Type-Options', b'nosniff'), (b'Set-Cookie', b'_cfuvid=3Tj8CiMsPnui1NQeOiNWIKlG2tnjrYTUScXsiLZwv7E-1750706837613-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'Server', b'cloudflare'), (b'CF-RAY', b'954661acfbcfed85-CDG'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2025-06-23 21:27:17,779 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-23 21:27:17,779 [DEBUG] receive_response_body.started request=<Request [b'POST']>
+2025-06-23 21:27:17,780 [DEBUG] receive_response_body.complete
+2025-06-23 21:27:17,780 [DEBUG] response_closed.started
+2025-06-23 21:27:17,780 [DEBUG] response_closed.complete
+2025-06-23 21:27:17,780 [DEBUG] HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers([('date', 'Mon, 23 Jun 2025 19:27:17 GMT'), ('content-type', 'application/json'), ('transfer-encoding', 'chunked'), ('connection', 'keep-alive'), ('access-control-expose-headers', 'X-Request-ID'), ('openai-organization', 'yann-outlook'), ('openai-processing-ms', '3805'), ('openai-version', '2020-10-01'), ('x-envoy-upstream-service-time', '3809'), ('x-ratelimit-limit-requests', '10000'), ('x-ratelimit-limit-tokens', '10000'), ('x-ratelimit-remaining-requests', '9999'), ('x-ratelimit-remaining-tokens', '9881'), ('x-ratelimit-reset-requests', '8.64s'), ('x-ratelimit-reset-tokens', '714ms'), ('x-request-id', 'req_dc1526117dbcf042c46a09468fdc99f9'), ('strict-transport-security', 'max-age=31536000; includeSubDomains; preload'), ('cf-cache-status', 'DYNAMIC'), ('set-cookie', '__cf_bm=7ZSrQ8lJDSBmi3jriO8vqeqq3cx5zaCAYzdCKDqr0QY-1750706837-1.0.1.1-Ju2mpiMXrm_8lpz0Jwqz8xG6rDVvYtP8qo0dpCactHUO3pjbE5AZgdg1gSc.QDbPnVNdp_jjC_NFwjd7.G4_cwjEkGT.ANXizpCNTtF58QQ; path=/; expires=Mon, 23-Jun-25 19:57:17 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), ('x-content-type-options', 'nosniff'), ('set-cookie', '_cfuvid=3Tj8CiMsPnui1NQeOiNWIKlG2tnjrYTUScXsiLZwv7E-1750706837613-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), ('server', 'cloudflare'), ('cf-ray', '954661acfbcfed85-CDG'), ('content-encoding', 'gzip'), ('alt-svc', 'h3=":443"; ma=86400')])
+2025-06-23 21:27:17,780 [DEBUG] request_id: req_dc1526117dbcf042c46a09468fdc99f9
+2025-06-23 21:27:26,581 [DEBUG] URL being requested: POST https://www.googleapis.com/drive/v3/files?fields=id&alt=json
+2025-06-23 21:27:26,583 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-06-23 21:33:49,373 [DEBUG] close.started
+2025-06-23 21:33:49,374 [DEBUG] close.complete
+2025-06-23 21:36:00,608 [INFO] Serving on http://0.0.0.0:5000
+2025-06-23 21:36:04,712 [DEBUG] Nom du dossier extrait : testdrive dans google drive
+2025-06-23 21:36:04,760 [DEBUG] URL being requested: POST https://www.googleapis.com/drive/v3/files?fields=id&alt=json
+2025-06-23 21:36:04,761 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-06-23 21:36:27,731 [DEBUG] Nom du dossier extrait : testdrive ia dans google drive
+2025-06-23 21:36:27,776 [DEBUG] URL being requested: POST https://www.googleapis.com/drive/v3/files?fields=id&alt=json
+2025-06-23 21:36:27,777 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-06-23 21:42:34,552 [INFO] Serving on http://0.0.0.0:5000
+2025-06-23 21:42:42,792 [DEBUG] URL being requested: POST https://www.googleapis.com/drive/v3/files?fields=id&alt=json
+2025-06-23 21:42:42,794 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-06-23 21:44:01,688 [INFO] Serving on http://0.0.0.0:5000
+2025-06-23 21:44:08,366 [DEBUG] URL being requested: POST https://www.googleapis.com/drive/v3/files?fields=id&alt=json
+2025-06-23 21:44:08,367 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-06-23 21:44:15,035 [DEBUG] URL being requested: POST https://www.googleapis.com/drive/v3/files?fields=id&alt=json
+2025-06-23 21:44:15,036 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-06-23 21:46:59,220 [INFO] Serving on http://0.0.0.0:5000
+2025-06-23 21:47:16,374 [DEBUG] URL being requested: POST https://www.googleapis.com/drive/v3/files?fields=id&alt=json
+2025-06-23 21:47:16,376 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-06-23 21:53:10,190 [INFO] Serving on http://0.0.0.0:5000
+2025-06-23 21:53:13,073 [DEBUG] URL being requested: POST https://www.googleapis.com/drive/v3/files?fields=id&alt=json
+2025-06-23 21:53:13,076 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-06-23 22:09:27,496 [INFO] Serving on http://0.0.0.0:5000
+2025-06-23 22:09:31,903 [DEBUG] URL being requested: GET https://www.googleapis.com/drive/v3/files?q=name%3D%27ia_sauvegardes+dans+google+drive%27+and+%271A0PB_7WNCHT6Wr767P_j2-vAyoLZgoPV%27+in+parents+and+trashed%3Dfalse&spaces=drive&fields=files%28id%2C+name%29&alt=json
+2025-06-23 22:09:31,904 [DEBUG] Making request: POST https://oauth2.googleapis.com/token
+2025-06-23 22:49:50,157 [INFO] Serving on http://0.0.0.0:5000
+2025-06-24 10:05:08,275 [INFO] Serving on http://0.0.0.0:5000
+2025-06-24 10:05:57,827 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-24 10:06:09,904 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-24 14:03:01,876 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-24 14:03:01,877 [INFO] [33mPress CTRL+C to quit[0m
+2025-06-24 14:03:01,884 [INFO]  * Restarting with stat
+2025-06-24 14:03:03,679 [WARNING]  * Debugger is active!
+2025-06-24 14:03:03,682 [INFO]  * Debugger PIN: 900-151-678
+2025-06-24 14:21:16,819 [INFO]  * Detected change in 'C:\\Users\\yanna\\AppData\\Local\\Packages\\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\\LocalCache\\local-packages\\Python311\\site-packages\\openai\\types\\chat\\chat_completion_system_message_param.py', reloading
+2025-06-24 14:21:17,003 [INFO]  * Restarting with stat
+2025-06-24 14:21:24,266 [WARNING]  * Debugger is active!
+2025-06-24 14:21:24,269 [INFO]  * Debugger PIN: 900-151-678
+2025-06-24 14:21:30,965 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-24 14:21:30,965 [INFO] [33mPress CTRL+C to quit[0m
+2025-06-24 14:21:30,966 [INFO]  * Restarting with stat
+2025-06-24 14:21:32,873 [WARNING]  * Debugger is active!
+2025-06-24 14:21:32,878 [INFO]  * Debugger PIN: 900-151-678
+2025-06-24 14:56:35,979 [INFO]  * Detected change in 'C:\\JARVYS_AI\\my-double-numerique\\agent_core.py', reloading
+2025-06-24 14:56:36,335 [INFO]  * Detected change in 'C:\\JARVYS_AI\\my-double-numerique\\agent_core.py', reloading
+2025-06-24 14:56:36,372 [INFO]  * Restarting with stat
+2025-06-24 14:56:36,736 [INFO]  * Restarting with stat
+2025-06-24 14:56:40,476 [WARNING]  * Debugger is active!
+2025-06-24 14:56:40,484 [INFO]  * Debugger PIN: 900-151-678
+2025-06-24 14:56:40,489 [WARNING]  * Debugger is active!
+2025-06-24 14:56:40,498 [INFO]  * Debugger PIN: 900-151-678
+2025-06-24 14:57:39,882 [INFO]  * Detected change in 'C:\\JARVYS_AI\\my-double-numerique\\agent_core.py', reloading
+2025-06-24 14:57:40,155 [INFO]  * Restarting with stat
+2025-06-24 14:57:40,619 [INFO]  * Detected change in 'C:\\JARVYS_AI\\my-double-numerique\\agent_core.py', reloading
+2025-06-24 14:57:40,979 [INFO]  * Restarting with stat
+2025-06-24 16:27:12,050 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-06-24 16:27:12,050 [INFO] [33mPress CTRL+C to quit[0m
+2025-06-24 16:27:12,050 [INFO] [33mPress CTRL+C to quit[0m
+2025-06-24 16:27:12,053 [INFO]  * Restarting with stat
+2025-06-24 16:27:14,971 [WARNING]  * Debugger is active!
+2025-06-24 16:27:14,976 [INFO]  * Debugger PIN: 900-151-678
+2025-06-24 16:27:14,986 [WARNING]  * Debugger is active!
+2025-06-24 16:27:14,990 [INFO]  * Debugger PIN: 900-151-678
+2025-06-24 16:35:42,456 [INFO] 127.0.0.1 - - [24/Jun/2025 16:35:42] "GET / HTTP/1.1" 200 -
+2025-06-24 16:35:52,070 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-24 16:35:52,077 [INFO] 127.0.0.1 - - [24/Jun/2025 16:35:52] "POST /ask HTTP/1.1" 200 -
+2025-06-24 16:35:52,811 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-24 16:35:52,814 [INFO] 127.0.0.1 - - [24/Jun/2025 16:35:52] "POST /ask HTTP/1.1" 200 -
+2025-06-24 16:36:30,044 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-24 16:36:30,050 [INFO] 127.0.0.1 - - [24/Jun/2025 16:36:30] "POST /ask HTTP/1.1" 200 -
+2025-06-24 16:36:32,497 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2025-06-24 16:36:32,502 [INFO] 127.0.0.1 - - [24/Jun/2025 16:36:32] "POST /ask HTTP/1.1" 200 -
+2025-06-24 16:37:40,503 [INFO]  * Detected change in 'C:\\JARVYS_AI\\my-double-numerique\\agent_core.py', reloading
+2025-06-24 16:37:40,771 [INFO]  * Detected change in 'C:\\JARVYS_AI\\my-double-numerique\\agent_core.py', reloading
+2025-06-24 16:37:40,772 [INFO]  * Restarting with stat
+2025-06-24 16:37:41,080 [INFO]  * Restarting with stat
+2025-06-25 09:11:53,207 [INFO] HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-25 09:11:54,778 [INFO] HTTP Request: GET http://localhost:7860/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-06-25 09:11:57,815 [INFO] HTTP Request: HEAD http://localhost:7860/ "HTTP/1.1 200 OK"
+2025-06-25 09:18:12,117 [INFO] HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+2025-06-25 09:18:13,470 [INFO] HTTP Request: GET http://localhost:7860/gradio_api/startup-events "HTTP/1.1 200 OK"
+2025-06-25 09:18:15,510 [INFO] HTTP Request: HEAD http://localhost:7860/ "HTTP/1.1 200 OK"

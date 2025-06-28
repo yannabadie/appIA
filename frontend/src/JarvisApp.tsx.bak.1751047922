@@ -1,0 +1,81 @@
+import React, { useState, useEffect, useRef } from "react";
+interface Message { who: string; text: string; when: string; model?: string }
+const agents = [
+  { label: "Auto", value: "auto" }, { label: "OpenAI", value: "openai" }, { label: "Gemini", value: "gemini" }, { label: "Mistral", value: "ollama" }
+];
+
+const getColor = (model: string) => model === "openai" ? "#34c4fa" : model === "gemini" ? "#ff7f00" : "#a4f" ;
+
+export default function JarvisApp() {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState("");
+  const [agent, setAgent] = useState("auto");
+  const [isLoading, setIsLoading] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => { inputRef.current?.focus(); }, []);
+  useEffect(() => { if (!messages.length) setMessages([{who: "jarvis", text: "👋 Bonjour Yann ! Je suis Jarvis, ton assistant IA personnel. Que puis-je faire pour toi aujourd'hui ?", when: new Date().toLocaleTimeString()}]); }, []);
+
+  const sendMessage = async () => {
+    if (!input.trim()) return;
+    setMessages(m => [...m, { who: "user", text: input, when: new Date().toLocaleTimeString() }]);
+    setIsLoading(true);
+    try {
+      const resp = await fetch("http://localhost:8000/ask", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question: input, agent })
+      });
+      const data = await resp.json();
+      // Extraction du modèle depuis la réponse
+      let usedModel = "auto";
+      if (data.answer && data.answer.includes("[OpenAI]")) usedModel = "openai";
+      if (data.answer && data.answer.includes("[Gemini]")) usedModel = "gemini";
+      if (data.answer && data.answer.includes("[Mistral") || data.answer.includes("[Ollama")) usedModel = "ollama";
+      setMessages(msgs =>
+        [...msgs, { who: "jarvis", text: data.answer.replace(/\n?🤖.*$/, ""), when: new Date().toLocaleTimeString(), model: usedModel }]
+      );
+    } catch (err) {
+      setMessages(msgs =>
+        [...msgs, { who: "jarvis", text: "(Erreur: backend injoignable)", when: new Date().toLocaleTimeString() }]
+      );
+    }
+    setIsLoading(false);
+    setInput("");
+  };
+
+  return (
+    <div className="jarvis-ui">
+      <div className="header">
+        <div className="avatar animated"></div>
+        <div>
+          <span className="title">Jarvis AI Console</span>
+          <span className="subtitle">Bienvenue, Yann !</span>
+        </div>
+      </div>
+      <div className="chatbox">
+        {messages.map((msg, i) => (
+          <div key={i} className={"msg " + (msg.who === "jarvis" ? "jarvis" : "user")}>
+            <span className="who">{msg.who === "jarvis" ? "🤖 Jarvis" : "🧑 Yann"} <span className="when">{msg.when}</span>
+              {msg.model && <span className="model" style={{color: getColor(msg.model)}}>({msg.model})</span>}
+            </span>
+            <div className="text">{msg.text}</div>
+          </div>
+        ))}
+        {isLoading && <div className="msg jarvis"><span className="who">🤖 Jarvis</span><div className="typing">Jarvis réfléchit<span className="dot">.</span><span className="dot">.</span><span className="dot">.</span></div></div>}
+      </div>
+      <div className="controls">
+        <select value={agent} onChange={e => setAgent(e.target.value)}>
+          {agents.map(a => <option key={a.value} value={a.value}>{a.label}</option>)}
+        </select>
+        <input
+          ref={inputRef}
+          value={input}
+          placeholder="Pose ta question à Jarvis…"
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={e => e.key === "Enter" && sendMessage()}
+        />
+        <button disabled={isLoading} onClick={sendMessage}>Envoyer</button>
+      </div>
+    </div>
+  );
+}

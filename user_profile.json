@@ -1,0 +1,28 @@
+{
+  "name": "Yann",
+  "tech_skills": [
+    "Microsoft Cloud (Azure, 365, Entra, Intune, Defender)",
+    "GCP, OneDrive, Supabase",
+    "Python, PowerShell, Terraform",
+    "Automatisation, s\u00e9curit\u00e9, IA"
+  ],
+  "goals": [
+    "Avoir un assistant personnel type Jarvis",
+    "Optimiser la productivit\u00e9",
+    "S\u00e9curit\u00e9 et automatisation"
+  ],
+  "preferences": [
+    "Interface sobre",
+    "Rafra\u00eechissement imm\u00e9diat",
+    "M\u00e9moire \u00e9volutive"
+  ],
+  "personality": "Proactif, analytique, s\u2019adapte \u00e0 mon style, fait des suggestions",
+  "health": {
+    "sleep": "fragile",
+    "sports": [
+      "muscu",
+      "randonn\u00e9e"
+    ],
+    "epilepsy": true
+  }
+}

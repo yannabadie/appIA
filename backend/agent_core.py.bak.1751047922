@@ -1,0 +1,77 @@
+import os, requests, datetime, json
+
+PROFILE_PATH = os.path.join(os.path.dirname(__file__), "profile.json")
+MEMORY_PATH = os.path.join(os.path.dirname(__file__), "agent_memory.json")
+profile = json.load(open(PROFILE_PATH))
+user_name = profile.get("user", "Utilisateur")
+
+def agent_query(question: str, agent: str = "auto", context: dict = None):
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    intro = f"Tu es Jarvis, assistant personnel de {user_name}, expert Cloud/Cyber, loyal et humain."
+    if not question.strip():
+        return {"answer": f"Bonjour {user_name}, je suis Jarvis, prêt à t'aider sur le cloud, la sécurité, ou la vie perso !", "agent": "none", "time": now}
+    # Décision de l'agent
+    if agent == "auto":
+        q = question.lower()
+        if any(k in q for k in ["azure", "openai", "copilot", "security", "cloud", "sécurité"]): agent = "openai"
+        elif any(k in q for k in ["gcp", "gemini", "google"]): agent = "gemini"
+        elif any(k in q for k in ["ollama", "mistral"]): agent = "ollama"
+        else: agent = profile.get("prefs", {}).get("default_agent", "openai")
+    # Sélection de l'agent IA
+    resp, meta = "", ""
+    try:
+        if agent == "openai":
+            import openai
+            openai.api_key = os.environ.get("OPENAI_API_KEY", "")
+            response = openai.OpenAI(api_key=os.environ.get("OPENAI_API_KEY")).chat.completions.create(
+                model="gpt-4o",
+                messages=[{"role": "system", "content": intro}, {"role": "user", "content": question}]
+            )
+            resp = response.choices[0].message.content.strip()
+            meta = "[OpenAI]"
+        elif agent == "gemini":
+            GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key={GEMINI_API_KEY}"
+            data = {"contents":[{"parts":[{"text": intro + "\n" + question}]}]}
+            r = requests.post(url, json=data)
+            resp = r.json().get("candidates", [{}])[0].get("content", {}).get("parts", [{}])[0].get("text", "")
+            meta = "[Gemini]"
+        elif agent == "ollama":
+            host = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
+            model = os.environ.get("OLLAMA_MODEL", "mistral")
+            payload = {"model": model, "prompt": intro + "\n" + question}
+            r = requests.post(f"{host}/api/generate", json=payload)
+            resp = r.json().get("response", "")
+            meta = "[Ollama/Mistral]"
+        else:
+            resp = "Je n'ai pas compris le moteur à utiliser."
+            meta = "[Aucun]"
+    except Exception as e:
+        resp = f"(Erreur {agent}: {e})"
+        meta = f"[{agent}]"
+    # Log mémoire locale
+    memlog = []
+    try:
+        if os.path.exists(MEMORY_PATH):
+            memlog = json.load(open(MEMORY_PATH))
+    except: pass
+    memlog.append({"date": now, "question": question, "response": resp, "agent": agent})
+    json.dump(memlog[-50:], open(MEMORY_PATH, "w")) # Garde les 50 derniers
+    # Return structuré
+    return {
+        "answer": resp,
+        "agent": agent,
+        "meta": meta,
+        "time": now,
+        "profile": profile
+    }
+
+def query_deepseek(prompt, model="deepseek-llm:latest"):
+    import requests
+    url = "http://localhost:11434/api/generate"
+    payload = {"model": model, "prompt": prompt, "stream": False}
+    r = requests.post(url, json=payload, timeout=90)
+    if r.status_code == 200:
+        return r.json().get("response", "Aucune réponse.")
+    else:
+        return f"Ollama: {r.text}"
