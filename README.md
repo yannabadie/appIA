@@ -12,7 +12,7 @@ Créer un assistant IA autonome, personnalisable, piloté via interface web/VSC/
 ## 🗂️ Roadmap & Todo
 - [ ] Initialiser la base projet (README, .gitignore, structure backend/frontend/scripts)
 - [ ] Ajouter la todo.md et la lier à un Project GitHub
-- [ ] Développer l’orchestration backend (FastAPI/Flask)
+- [ ] Développer l’orchestration backend (FastAPI)
 - [ ] Intégrer la gestion multi-LLM (OpenAI, Gemini, DeepSeek, Ollama, local/cloud)
 - [ ] Implémenter la mémoire vectorielle et la gestion de contexte utilisateur
 - [ ] Créer l’UI web (Streamlit/React) + CLI d’administration

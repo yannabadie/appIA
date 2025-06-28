@@ -53,7 +53,7 @@ appIA/
 
 ## 🛠️ Stack Technique
 
-- **Backend** : Python 3.10+, FastAPI, Flask (legacy), orchestrations LLM/API, stockage contextuel (Git, vector DB…)
+- **Backend** : Python 3.10+, FastAPI, orchestrations LLM/API, stockage contextuel (Git, vector DB…)
 - **Frontend** : React (Next.js), Streamlit (debug/monitoring rapide), Web UI custom, support TTS/vocal
 - **LLM locaux** : Ollama (Deepseek, Mixtral, etc. ; GPU ou CPU)
 - **LLM cloud** : OpenAI GPT-4o/4.1, Gemini 2.5 Pro (API), routing automatique selon tâches
