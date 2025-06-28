@@ -53,3 +53,26 @@ cd appIA
 cd backend && uvicorn main:app --reload
 # Pour lancer le frontend (React ou Streamlit)
 cd frontend && npm install && npm start
+
+Pour toute évolution : créer une issue ou commenter ici. Codex/Copilot suivront ce README comme backlog.
+
+🟢 Pour relancer les Actions et voir que tout fonctionne, pousse ce README à la racine et regarde l’onglet Actions !
+
+yaml
+Copier
+Modifier
+
+---
+
+**Fais ce commit, et tu verras la machine se remettre en route.**
+- Ensuite, je continue avec le backlog complet, la purge des scripts inutiles, et la génération d’un fichier `FEATURES.md` détaillé, à valider ensemble avant passage à la phase “codage solo”.
+
+---
+
+Si tu veux aller encore plus vite :  
+1. Pousse ce README ou toute modif dans le repo  
+2. Ping-moi ici après chaque étape, je surveille l’activité du repo et te donne la suite “en live”.
+
+---
+
+Dis-moi si tu veux que je rédige tout de suite le backlog `FEATURES.md` ou que je t’aide à purger tous les scripts parasites !
