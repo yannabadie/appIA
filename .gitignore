@@ -26,3 +26,11 @@
 # GPU libs
 lib/*
 site-packages/*
+jarvisenv310/
+*.so
+*.pack
+*.db
+*.dic
+*.pyc
+__pycache__/
+*.log
