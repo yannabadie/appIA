@@ -1,0 +1,31 @@
+Status,Title,Description,Labels
+Backlog,Initialiser le projet,"Crée la structure backend, frontend, scripts, .gitignore, arborescence",🛠️ Infra
+Backlog,Nettoyer l’arborescence,"Supprimer les scripts inutiles, organiser le repo pour modularité",🛠️ Infra
+Backlog,Préparer .gitignore,"Met à jour le .gitignore pour ne garder que le code source utile",🛠️ Infra
+Backlog,Créer page login,"Interface d’authentification simple pour l’accès personnel/pro",🧑‍💻 UI
+Backlog,Intégrer prompt textuel UI,"Ajoute un champ prompt pour dialoguer avec l’IA",🧑‍💻 UI
+Backlog,Intégrer vocal input/output,"Ajoute micro (Whisper) et voix de synthèse (TTS)",🎤 Vocal
+Backlog,Ajouter monitoring/logs de base,"Dashboard simple : logs, statut backend, dernières actions",📊 Monitoring
+Backlog,Wrapper OpenAI GPT-4,"Module pour appeler OpenAI GPT-4 via API",🧠 LLM
+Backlog,Wrapper Gemini,"Module pour dialoguer avec Gemini (Google)",🧠 LLM
+Backlog,Wrapper DeepSeek,"Module pour utiliser DeepSeek (API ou local)",🧠 LLM
+Backlog,Wrapper Ollama,"Connexion aux LLM Ollama local (API/docker)",🧠 LLM
+Backlog,Sélection dynamique du modèle,"Logique pour choisir le LLM selon tâche/prix/perf",🔀 Orchestration
+Backlog,Gérer mémoire contextuelle,"Implémentation d’une mémoire vectorielle/contextuelle (ChromaDB, FAISS…)",🧠 Mémoire
+Backlog,Intégrer Gmail/Outlook,"Lire, envoyer, trier les mails pro/perso",📬 Automatisation
+Backlog,Intégrer Drive/OneDrive,"Connexion cloud : upload, download, recherche fichiers",🗂️ Automatisation
+Backlog,Gestion des rappels/calendrier,"Création/lecture/modif d’événements/rappels",🗓️ Automatisation
+Backlog,Agent recherche/veille web,"Module IA pour faire de la veille et de la recherche automatique",🦾 Agent
+Backlog,Utiliser Copilot Vault pour secrets,"Sécuriser et centraliser les credentials/API keys",🔒 Sécurité
+Backlog,Audit logs et accès,"Tracer les accès sensibles, créer logs d’audit",🛡️ Sécurité
+Backlog,Tests auto CI/CD,"Pipeline CI (test, lint, build, déploiement)",🔁 CI/CD
+Backlog,Notifications email/discord,"Avertir l’utilisateur en cas d’action critique",🔔 Notification
+Backlog,Dashboard monitoring avancé,"Afficher graphiques : usage, stats, logs",📊 Monitoring
+Backlog,Doc auto-générée,"README, changelog, usage générés automatiquement",📖 Documentation
+Backlog,Auto-changelog,"Mettre à jour changelog automatiquement par commit/release",📖 Documentation
+Ready,Créer backend minimal,"Squelette FastAPI/Flask, endpoints API de base",🛠️ Infra
+Ready,Créer frontend minimal,"Première page web (Streamlit/React), connexion API",🧑‍💻 UI
+Ready,Brancher premier LLM,"Connexion au premier modèle IA pour prompt de test",🧠 LLM
+Ready,Créer pipeline prompt->IA->réponse,"Faire un premier échange end-to-end texte",🔀 Orchestration
+Ready,Gérer config et secrets,"Lecture via Vault/Secrets (pas en dur dans le code)",🔒 Sécurité
+Ready,Ajouter système de logs,"Loger toutes les actions backend/utilisateur",📊 Monitoring
