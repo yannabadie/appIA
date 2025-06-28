@@ -1,78 +1,40 @@
-# JARVIS-AI: Assistant Multimodal et Multi-IA
-- Agent IA personnel, multimodal, multi-LLM, multi-cloud (OpenAI, Gemini, Google, Microsoft)
-- UI moderne (ChatGPT-like), mémoire locale/cloud (Supabase), édition docs/drive/vision
-- Pour lancer : python web_ui.py (http://localhost:7860)
-- Adapter .env si besoin de changer des clés/tokens.
+# JarvisAI - Projet IA Personnel & Pro
 
-# 🚀 JARVIS IA - Digital Assistant Project
+## 🎯 Objectif
+Créer un assistant IA autonome, personnalisable, piloté via interface web/VSC/Codespaces, capable de :
+- Automatiser des tâches pro/perso (cloud, fichiers, email, API…)
+- Gérer, organiser et améliorer son propre codebase
+- S’intégrer aux principaux LLMs (GPT-4.1, Gemini 2.5 Pro, DeepSeek, Ollama…)
+- Orchestrer via une interface (web & CLI) et une mémoire vectorielle
+- Utiliser Copilot, Codex, Codespaces, Actions pour itérer vite
+- Sécuriser et gérer les secrets/API via Vault Copilot ou GitHub Secrets
 
-Ce repo vise à créer un assistant personnel et professionnel IA, extensible et multi-agent, s’appuyant sur :
+## 🗂️ Roadmap & Todo
+- [ ] Initialiser la base projet (README, .gitignore, structure backend/frontend/scripts)
+- [ ] Ajouter la todo.md et la lier à un Project GitHub
+- [ ] Développer l’orchestration backend (FastAPI/Flask)
+- [ ] Intégrer la gestion multi-LLM (OpenAI, Gemini, DeepSeek, Ollama, local/cloud)
+- [ ] Implémenter la mémoire vectorielle et la gestion de contexte utilisateur
+- [ ] Créer l’UI web (Streamlit/React) + CLI d’administration
+- [ ] Automatiser l’ajout/gestion de nouvelles tâches via l’interface
+- [ ] Intégrer la gestion vocale (Whisper, TTS…)
+- [ ] Sécuriser les credentials & secrets (Vault, GitHub secrets, Copilot Vault)
+- [ ] Mettre en place des tests automatiques (pytest, CI/CD)
+- [ ] Générer des releases auto et notifications de suivi (email, Discord, etc.)
 
-- **Python 3.10+ (backend FastAPI)**
-- **Frontend React ou Streamlit** (selon version)
-- **LLM hybrides : OpenAI GPT-4.1/4o, Gemini 2.5 Pro, Deepseek, Ollama (local)**
-- **Moteur de routing IA pour déléguer à l’agent le plus pertinent**
-- **Mémoire vectorielle personnalisée, stockée localement (faiss, chromadb, etc.)**
-- **Persistance : stockage sécurisé (Vault Copilot, fichiers cryptés, ou cloud sécurisé)**
-- **Automatisation : scripts pour maintenance, onboarding, CI/CD**
-- **Tests automatiques (GitHub Actions, Codespaces, pytest, etc.)**
-- **Gestion vocale Whisper/TTS, support web/vocal/CLI**
-- **Intégration VSCode, Copilot, Codex**
-- **Sécurité des données (chiffrement, logs contrôlés, audit, .gitignore strict)**
-
----
-
-## 🧑‍💻 **TODO & Roadmap immédiate**
-
-1. **Nettoyer et documenter la racine du projet**
-2. **Supprimer scripts inutiles (.ps1, .sh sauf maintenance)**
-3. **Mise à jour complète du README et création de `FEATURES.md`**
-4. **Initialiser la mémoire vectorielle locale**
-5. **Automatiser le test d’intégration dans Codespaces**
-6. **Documenter le process d’onboarding pour Codex/Copilot**
-7. **Sécuriser le vault de secrets (Copilot Vault, .env.local)**
-8. **Ajout badge build, feedback, logs CI/CD**
+## 🚧 Fonctionnalités à prioriser (peux être ajustées selon tes retours)
+- Orchestration multi-LLM & mémoire contextuelle
+- Interface web/admin ergonomique
+- CLI et agents vocaux
+- Monitoring et auto-amélioration (auto-feedback Codex/Copilot)
+- Historique, logs et auditabilité
+- Intégration Copilot, Codespaces, GitHub Actions pour dev accéléré
+- Documentation auto-générée (README, changelog, todo)
 
 ---
 
-## 📡 **Suivi LIVE**
+## 🛠️ Suivi et Pilotage
+- Suivi du projet, TODO et issues via l’onglet **Projects** et **Issues** GitHub
+- Historique CI/CD, actions auto et builds : onglet **Actions**
+- Dev collaboratif en direct sur Codespaces (ou local via VSCode + Copilot)
 
-- **Actions/CI** : [https://github.com/yannabadie/appIA/actions](https://github.com/yannabadie/appIA/actions)
-- **Codespaces** : [https://github.com/yannabadie/appIA/codespaces](https://github.com/yannabadie/appIA/codespaces)
-- **Issues/Feedback** : [https://github.com/yannabadie/appIA/issues](https://github.com/yannabadie/appIA/issues)
-
----
-
-## ⚙️ **Commandes utiles**
-
-```bash
-# Cloner et lancer en local
-git clone https://github.com/yannabadie/appIA.git
-cd appIA
-# Pour démarrer backend
-cd backend && uvicorn main:app --reload
-# Pour lancer le frontend (React ou Streamlit)
-cd frontend && npm install && npm start
-
-Pour toute évolution : créer une issue ou commenter ici. Codex/Copilot suivront ce README comme backlog.
-
-🟢 Pour relancer les Actions et voir que tout fonctionne, pousse ce README à la racine et regarde l’onglet Actions !
-
-yaml
-Copier
-Modifier
-
----
-
-**Fais ce commit, et tu verras la machine se remettre en route.**
-- Ensuite, je continue avec le backlog complet, la purge des scripts inutiles, et la génération d’un fichier `FEATURES.md` détaillé, à valider ensemble avant passage à la phase “codage solo”.
-
----
-
-Si tu veux aller encore plus vite :  
-1. Pousse ce README ou toute modif dans le repo  
-2. Ping-moi ici après chaque étape, je surveille l’activité du repo et te donne la suite “en live”.
-
----
-
-Dis-moi si tu veux que je rédige tout de suite le backlog `FEATURES.md` ou que je t’aide à purger tous les scripts parasites !
