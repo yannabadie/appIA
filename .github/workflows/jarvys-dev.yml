@@ -2,7 +2,7 @@ name: JARVYS-Dev Orchestration
 
 on:
   schedule:
-    - cron: '0 * * * *'      # chaque heure
+    - cron: '0 * * * *'   # chaque heure
   workflow_dispatch:
 
 env:
@@ -12,25 +12,32 @@ env:
 jobs:
   build_and_run:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
-        with: {fetch-depth: 0}
+        with: { fetch-depth: 0 }
 
-      - name: Build (cache)
-        uses: docker/build-push-action@v5
+      # 🔧 1. Crée un builder Buildx compatible cache
+      - uses: docker/setup-buildx-action@v3
+        with:
+          install: true            # remplace le "docker build" classique
+
+      # 🔨 2. Build avec cache GHA
+      - uses: docker/build-push-action@v5
         with:
           context: .
           tags: ${{ env.ImageName }}:${{ env.ImageTag }}
-          push: false
           cache-from: type=gha
           cache-to:   type=gha,mode=max
+          push: false        # on ne pousse pas dans un registry public
 
+      # ▶ 3. Lance le conteneur agent
       - name: Run agent
         env:
-          OPENAI_API_KEY:     ${{ secrets.OPENAI_API_KEY }}
-          SUPABASE_URL:       ${{ secrets.SUPABASE_URL }}
-          SUPABASE_KEY:       ${{ secrets.SUPABASE_KEY }}
-          GITHUB_TOKEN:       ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY:   ${{ secrets.OPENAI_API_KEY }}
+          SUPABASE_URL:     ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY:     ${{ secrets.SUPABASE_KEY }}
+          GITHUB_TOKEN:     ${{ secrets.GITHUB_TOKEN }}
         run: |
           docker run --rm \
             -e OPENAI_API_KEY \
