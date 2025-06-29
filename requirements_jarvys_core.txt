@@ -1,0 +1,4 @@
+openai>=1.14
+supabase>=2.0
+tiktoken
+numpy
