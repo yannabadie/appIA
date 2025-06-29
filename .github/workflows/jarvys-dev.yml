@@ -1,47 +1,58 @@
 name: JARVYS-Dev Orchestration
 
 on:
+  # exécute l’agent chaque heure
   schedule:
-    - cron: '0 * * * *'   # chaque heure
+    - cron: '0 * * * *'
+  # exécution manuelle
   workflow_dispatch:
 
 env:
-  ImageName: jarvys-dev
-  ImageTag: latest
+  IMAGE_NAME: jarvys-dev
+  IMAGE_TAG: latest
 
 jobs:
-  build_and_run:
+  build-and-run:
     runs-on: ubuntu-latest
+    timeout-minutes: 30         # coupe le job s’il dépasse 30 min
+    concurrency:                # évite deux runs simultanés
+      group: jarvys-dev
+      cancel-in-progress: true
 
     steps:
-      - uses: actions/checkout@v4
-        with: { fetch-depth: 0 }
-
-      # 🔧 1. Crée un builder Buildx compatible cache
-      - uses: docker/setup-buildx-action@v3
+      # 1️⃣ Récupération du code
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          install: true            # remplace le "docker build" classique
+          fetch-depth: 0
 
-      # 🔨 2. Build avec cache GHA
-      - uses: docker/build-push-action@v5
+      # 2️⃣ Builder Docker « container » compatible cache GHA
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          install: true           # remplace la commande docker build classique
+
+      # 3️⃣ Build de l’image (cache GHA)
+      - name: Build container image
+        uses: docker/build-push-action@v5
         with:
           context: .
-          tags: ${{ env.ImageName }}:${{ env.ImageTag }}
+          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           cache-from: type=gha
           cache-to:   type=gha,mode=max
-          push: false        # on ne pousse pas dans un registry public
+          push: false             # pas de push dans un registry public
 
-      # ▶ 3. Lance le conteneur agent
-      - name: Run agent
+      # 4️⃣ Lancement de l’agent JARVYS-Dev
+      - name: Run JARVYS-Dev agent
         env:
-          OPENAI_API_KEY:   ${{ secrets.OPENAI_API_KEY }}
-          SUPABASE_URL:     ${{ secrets.SUPABASE_URL }}
-          SUPABASE_KEY:     ${{ secrets.SUPABASE_KEY }}
-          GITHUB_TOKEN:     ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SUPABASE_URL:   ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY:   ${{ secrets.SUPABASE_KEY }}
+          GITHUB_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
         run: |
           docker run --rm \
             -e OPENAI_API_KEY \
             -e SUPABASE_URL \
             -e SUPABASE_KEY \
             -e GITHUB_TOKEN \
-            ${{ env.ImageName }}:${{ env.ImageTag }}
+            ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
