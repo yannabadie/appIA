@@ -2,7 +2,7 @@ name: JARVYS-Dev Orchestration
 
 on:
   schedule:
-    - cron: '0 * * * *'   # toutes les heures (UTC)
+    - cron: '0 * * * *'      # chaque heure
   workflow_dispatch:
 
 env:
@@ -14,12 +14,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
 
-      - name: Build Docker image
-        run: docker build -t ${{ env.ImageName }}:${{ env.ImageTag }} .
+      - name: Build (cache)
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          tags: ${{ env.ImageName }}:${{ env.ImageTag }}
+          push: false
+          cache-from: type=gha
+          cache-to:   type=gha,mode=max
 
-      - name: Run JARVYS-Dev container
+      - name: Run agent
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          GITHUB_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
-        run: docker run --rm -e OPENAI_API_KEY -e GITHUB_TOKEN ${{ env.ImageName }}:${{ env.ImageTag }}
+          OPENAI_API_KEY:     ${{ secrets.OPENAI_API_KEY }}
+          SUPABASE_URL:       ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY:       ${{ secrets.SUPABASE_KEY }}
+          GITHUB_TOKEN:       ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          docker run --rm \
+            -e OPENAI_API_KEY \
+            -e SUPABASE_URL \
+            -e SUPABASE_KEY \
+            -e GITHUB_TOKEN \
+            ${{ env.ImageName }}:${{ env.ImageTag }}
