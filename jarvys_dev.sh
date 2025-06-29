@@ -8,88 +8,62 @@
 # - pousse le patch + commente l'issue
 # Dépendances dans l'image : git, gh, node 22, python3, bash, codex CLI
 # ─────────────────────────────────────────────────────────────────────────────
+#!/usr/bin/env bash
 set -euo pipefail
 IFS=$'\n\t'
 
-log(){ printf "🕒  %s | %s\n" "$(date '+%F %T')" "$*"; }
+log(){ printf "🕒 %s | %s\n" "$(date '+%F %T')" "$*"; }
 
-### 1. Vérif des secrets obligatoires
-for v in GITHUB_TOKEN OPENAI_API_KEY; do
+### Secrets vérif
+for v in GITHUB_TOKEN OPENAI_API_KEY SUPABASE_URL SUPABASE_KEY; do
   [[ -z "${!v:-}" ]] && { echo "❌  $v manquant" >&2; exit 1; }
 done
+export GH_TOKEN=$GITHUB_TOKEN
 
-### 2. Repo Git
+### Repo
 if [[ ! -d .git ]]; then
   git init -q
   git remote add origin "https://$GITHUB_TOKEN@github.com/yannabadie/appIA.git"
 fi
 git pull --quiet origin main || true
 
-### 3. Authentification gh CLI (silencieuse)
-export GH_TOKEN=$GITHUB_TOKEN
-gh auth setup-git --hostname github.com >/dev/null 2>&1 || true
-
-### 4. Fonctions utilitaires ---------------------------------------------------
-codex_run(){   # $1 = prompt
-  log "Codex ▶︎ $1"
-  codex -y -q "$1"
-}
-
-create_codespace(){
-  log "⛺  Création Codespace pour la branche $1"
-  gh api -X POST \
-     repos/:owner/:repo/codespaces \
-     -f ref="$1" >/dev/null
-}
-
-assign_copilot(){
-  local issue="$1"
-  gh issue edit "$issue" --add-assignee github-copilot --add-label to-copilot
-}
-
-### 5. Import / triage backlog -------------------------------------------------
-PROJECT_URL="https://github.com/users/yannabadie/projects/2"
-log "Sync Project board"
-gh project item-list "$PROJECT_URL" --format json >/dev/null 2>&1 || \
-  gh project create "$PROJECT_URL" --title "Jarvis AI" >/dev/null
-
-# Exemple : tagger toute issue ouverte sans label
-for id in $(gh issue list --json number,labels,state --jq '.[] | select(.labels==[]) | .number'); do
-  log "🔖 Label issue #$id → backlog"
-  gh issue edit "$id" --add-label backlog
-done
-
-### 6. Sélection de la next-best issue ----------------------------------------
+### Prochaine issue backlog
 NEXT=$(gh issue list --label backlog --json number,createdAt \
        --jq 'sort_by(.createdAt) | .[0].number // empty')
-if [[ -z "$NEXT" ]]; then
-  log "👍  Aucun backlog en attente. Fin."
-  exit 0
-fi
-log "🎯 Prochaine feature : issue #$NEXT"
+[[ -z $NEXT ]] && { log "👍  Pas d'issue backlog"; exit 0; }
+TITLE=$(gh issue view "$NEXT" --json title --jq .title)
+BODY=$(gh issue view "$NEXT" --json body  --jq .body)
+log "🎯 Issue #$NEXT : $TITLE"
 
-assign_copilot "$NEXT"
+### RAG (Supabase) + GPT-4-o3 planner
+CTX=$(python backend/rag_query.py "$TITLE"$'\n\n'"$BODY")
+PLAN=$(python backend/ask_o3.py \
+        --title "$TITLE" --body "$BODY" --context "$CTX")
 
-### 7. Branche de travail + Codespace -----------------------------------------
-BRANCH="feat/issue-$NEXT-$(date +%H%M)"
-git checkout -b "$BRANCH"
-create_codespace "$BRANCH" || true
+CODEX_PROMPT=$(jq -r '.codex_prompt' <<<"$PLAN")
+TEST_CMD=$(jq -r '.test_cmd'     <<<"$PLAN")
+[[ -z $CODEX_PROMPT || $CODEX_PROMPT == "null" ]] && {
+  log "🚫  Planner n’a rien produit"; exit 0; }
 
-### 8. Génération Codex --------------------------------------------------------
-PROMPT=$(gh issue view "$NEXT" --json title,body \
-         --jq '.title + "\n\n" + .body')
-codex_run "$PROMPT"
+### Exec Codex
+log "🛠️  Codex…"
+codex -y -q "$CODEX_PROMPT"
 
-### 9. Commit / push -----------------------------------------------------------
+### Tests
+log "🧪  Tests : $TEST_CMD"
+bash -c "$TEST_CMD"
+
+### Commit & push
 git add -A
-git commit -m "feat(#$NEXT): auto-implementation via Codex" || \
-  log "ℹ️ Aucun changement à committer"
-
+git commit -m "feat(#$NEXT): impl auto via GPT-4-o3 + Codex" || true
 git remote set-url origin "https://$GITHUB_TOKEN@github.com/yannabadie/appIA.git"
+BRANCH="feat/issue-$NEXT-$(date +%s)"
+git checkout -B "$BRANCH"
 git push --set-upstream origin "$BRANCH"
 
-### 10. Ouvre un PR + commentaire issue ---------------------------------------
+### PR + issue comment
 PR_URL=$(gh pr create --fill --head "$BRANCH" --base main)
-gh issue comment "$NEXT" -b "🤖 PR ouverte : $PR_URL"
+gh issue edit "$NEXT" --add-label to-review
+gh issue comment "$NEXT" -b "🤖  PR ouverte : $PR_URL"
 
 log "✅  Cycle horaire terminé"
