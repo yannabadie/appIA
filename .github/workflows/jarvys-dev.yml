@@ -1,10 +1,10 @@
 name: JARVYS-Dev Orchestration
 
 on:
-  # exécute l’agent chaque heure
+  # ⏰ exécute l’agent chaque heure
   schedule:
     - cron: '0 * * * *'
-  # exécution manuelle
+  # ▶️ déclenchement manuel
   workflow_dispatch:
 
 env:
@@ -12,27 +12,27 @@ env:
   IMAGE_TAG: latest
 
 jobs:
-  build-and-run:
+  build_and_run:          # id du job (snake_case recommandé)
     runs-on: ubuntu-latest
-    timeout-minutes: 30         # coupe le job s’il dépasse 30 min
-    concurrency:                # évite deux runs simultanés
-      group: jarvys-dev
+    timeout-minutes: 30   # stoppe si > 30 min
+    concurrency:
+      group: jarvys-dev   # un seul run à la fois
       cancel-in-progress: true
 
     steps:
-      # 1️⃣ Récupération du code
+      # 1️⃣ Checkout complet (fetch-depth 0 pour avoir l’historique)
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # 2️⃣ Builder Docker « container » compatible cache GHA
-      - name: Set up Docker Buildx
+      # 2️⃣ Buildx + cache GHA
+      - name: Set up Buildx
         uses: docker/setup-buildx-action@v3
         with:
-          install: true           # remplace la commande docker build classique
+          install: true        # met « docker buildx » par défaut
 
-      # 3️⃣ Build de l’image (cache GHA)
+      # 3️⃣ Build l’image (sans push, cache bidirectionnel)
       - name: Build container image
         uses: docker/build-push-action@v5
         with:
@@ -40,9 +40,9 @@ jobs:
           tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           cache-from: type=gha
           cache-to:   type=gha,mode=max
-          push: false             # pas de push dans un registry public
+          push: false          # on ne pousse pas vers un registry public
 
-      # 4️⃣ Lancement de l’agent JARVYS-Dev
+      # 4️⃣ Lance JARVYS-Dev
       - name: Run JARVYS-Dev agent
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
