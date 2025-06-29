@@ -1,13 +1,26 @@
 FROM ghcr.io/openai/codex-universal:latest
 
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PIP_BREAK_SYSTEM_PACKAGES=1 \
+    VENV_PATH=/opt/venv
+
+# ── Tools ──────────────────────────────────────────────────────────────────
+RUN apt-get update -y && \
+    apt-get install -y --no-install-recommends python3-venv curl && \
+    rm -rf /var/lib/apt/lists/* && \
+    python -m venv $VENV_PATH && \
+    $VENV_PATH/bin/pip install --upgrade pip
+
+# Copy code first to leverage cache
 WORKDIR /workspace
-COPY . .
 COPY requirements_jarvys_core.txt .
 
-RUN pip install --no-cache-dir -r requirements_jarvys_core.txt
-# Les clés seront injectées au moment du docker run
-ENV OPENAI_API_KEY=""
-ENV GITHUB_TOKEN=""
+RUN . $VENV_PATH/bin/activate && \
+    pip install --no-cache-dir -r requirements_jarvys_core.txt
 
-RUN chmod +x jarvys_dev.sh
-CMD ["./jarvys_dev.sh"]
+# Copy the rest of the repo
+COPY . .
+
+ENV PATH="$VENV_PATH/bin:$PATH"
+
+ENTRYPOINT ["bash", "./jarvys_dev.sh"]
