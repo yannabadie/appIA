@@ -1,6 +1,8 @@
 name: JARVYS-Dev Orchestration
 
 on:
+  schedule:
+    - cron: '0 * * * *'   # toutes les heures (UTC)
   workflow_dispatch:
 
 env:
