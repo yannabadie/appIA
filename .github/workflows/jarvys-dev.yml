@@ -20,5 +20,4 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GITHUB_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
-        run: docker run --rm -e OPENAI_API_KEY -e GITHUB_TOKEN \
-              ${{ env.ImageName }}:${{ env.ImageTag }}
+        run: docker run --rm -e OPENAI_API_KEY -e GITHUB_TOKEN ${{ env.ImageName }}:${{ env.ImageTag }}
