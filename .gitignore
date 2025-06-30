@@ -1,21 +1,9 @@
-*.dic
-*.12
-*.10
-*.11
-*.9
-*.db
-*.so
-*.pack
-# Poids lourds et modèles à ignorer
+# ── Fichiers lourds / binaires ───────────────────────────────────
 *.pt
 *.pth
 *.ckpt
 *.bin
 *.tar
-*.dic
-*.db
-*.so
-*.pack
 *.zip
 *.h5
 *.npy
@@ -23,14 +11,38 @@
 *.pickle
 *.joblib
 *.onnx
-# GPU libs
-lib/*
-site-packages/*
-jarvisenv310/
+
+# ── Bibliothèques compilées / bases ──────────────────────────────
 *.so
-*.pack
 *.db
 *.dic
+*.pack
+
+# ── Python ───────────────────────────────────────────────────────
 *.pyc
 __pycache__/
 *.log
+
+# ── GPU libs locales à ignorer ───────────────────────────────────
+lib/*
+site-packages/*
+jarvisenv310/
+
+# ── Supabase ─────────────────────────────────────────────────────
+supabase/*
+
+!supabase/migrations/
+!supabase/migrations/**
+!supabase/seeders/
+!supabase/seeders/**
+
+# Supabase dossiers temporaires
+supabase/.branches/
+supabase/.temp/
+
+# ── IDE / outils ────────────────────────────────────────────────
+.vscode/
+
+# ── Node ────────────────────────────────────────────────────────
+node_modules/
+package-lock.json
