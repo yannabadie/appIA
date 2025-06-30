@@ -12,47 +12,48 @@ env:
   IMAGE_TAG: latest
 
 jobs:
-  build_and_run:          # id du job (snake_case recommandé)
+  build-run:
     runs-on: ubuntu-latest
-    timeout-minutes: 30   # stoppe si > 30 min
+    timeout-minutes: 30
     concurrency:
-      group: jarvys-dev   # un seul run à la fois
+      group: jarvys-dev
       cancel-in-progress: true
 
     steps:
-      # 1️⃣ Checkout complet (fetch-depth 0 pour avoir l’historique)
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+    # 1️⃣ Récupération du code (historique complet)
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
-      # 2️⃣ Buildx + cache GHA
-      - name: Set up Buildx
-        uses: docker/setup-buildx-action@v3
-        with:
-          install: true        # met « docker buildx » par défaut
+    # 2️⃣ Buildx + cache GHA
+    - name: Set up Buildx
+      uses: docker/setup-buildx-action@v3
+      with:
+        install: true
 
-      # 3️⃣ Build l’image (sans push, cache bidirectionnel)
-      - name: Build container image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
-          cache-from: type=gha
-          cache-to:   type=gha,mode=max
-          push: false          # on ne pousse pas vers un registry public
+    # 3️⃣ Build l’image (cache bidirectionnel) et la charge dans le démon
+    - name: Build container image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+        cache-from: type=gha
+        cache-to:   type=gha,mode=max
+        push: false          # on ne pousse pas
+        load: true           # 🔑 charge l’image localement pour l’étape suivante
 
-      # 4️⃣ Lance JARVYS-Dev
-      - name: Run JARVYS-Dev agent
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          SUPABASE_URL:   ${{ secrets.SUPABASE_URL }}
-          SUPABASE_KEY:   ${{ secrets.SUPABASE_KEY }}
-          GITHUB_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          docker run --rm \
-            -e OPENAI_API_KEY \
-            -e SUPABASE_URL \
-            -e SUPABASE_KEY \
-            -e GITHUB_TOKEN \
-            ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+    # 4️⃣ Lance JARVYS-Dev
+    - name: Run JARVYS-Dev agent
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        SUPABASE_URL:   ${{ secrets.SUPABASE_URL }}
+        SUPABASE_KEY:   ${{ secrets.SUPABASE_KEY }}
+        GITHUB_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        docker run --rm \
+          -e OPENAI_API_KEY \
+          -e SUPABASE_URL \
+          -e SUPABASE_KEY \
+          -e GITHUB_TOKEN \
+          ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
