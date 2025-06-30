@@ -34,3 +34,15 @@ jarvisenv310/
 *.pyc
 __pycache__/
 *.log
+
+# ── Supabase (ignore tout) ───────────────────────────────────────────
+supabase/*
+!supabase/migrations/**
+!supabase/seeders/**
+
+# Fichiers toujours ignorés
+supabase/**/README*.md
+supabase/**/config.toml
+supabase/**/.env*
+supabase/**/.branches/
+supabase/**/.temp/
