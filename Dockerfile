@@ -1,26 +1,26 @@
-FROM ghcr.io/openai/codex-universal:latest
+# ──────────────────────────────────────────────────────────────────
+FROM python:3.12-slim AS base
 
-ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
-    PIP_BREAK_SYSTEM_PACKAGES=1 \
-    VENV_PATH=/opt/venv
+# Ajoute Node 22 pour la CLI Codex
+RUN apt-get update -y \
+ && apt-get install -y --no-install-recommends curl gnupg \
+ && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+ && apt-get install -y --no-install-recommends nodejs git \
+ && rm -rf /var/lib/apt/lists/*
 
-# ── Tools ──────────────────────────────────────────────────────────────────
-RUN apt-get update -y && \
-    apt-get install -y --no-install-recommends python3-venv curl && \
-    rm -rf /var/lib/apt/lists/* && \
-    python -m venv $VENV_PATH && \
-    $VENV_PATH/bin/pip install --upgrade pip
+# Crée un venv « /venv »
+ENV VENV_PATH=/venv
+RUN python -m venv $VENV_PATH
+ENV PATH="$VENV_PATH/bin:$PATH"
 
-# Copy code first to leverage cache
 WORKDIR /workspace
 COPY requirements_jarvys_core.txt .
-
-RUN . $VENV_PATH/bin/activate && \
+RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements_jarvys_core.txt
 
-# Copy the rest of the repo
+# Copie le code après l’instal. des deps (meilleur cache)
 COPY . .
 
-ENV PATH="$VENV_PATH/bin:$PATH"
+RUN chmod +x jarvys_dev.sh
 
 ENTRYPOINT ["bash", "./jarvys_dev.sh"]
