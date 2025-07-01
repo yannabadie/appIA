@@ -1,48 +1,31 @@
-# ── Fichiers lourds / binaires ───────────────────────────────────
-*.pt
-*.pth
-*.ckpt
-*.bin
-*.tar
-*.zip
-*.h5
-*.npy
-*.npz
-*.pickle
-*.joblib
-*.onnx
+# ─── Fichiers lourds / modèles ─────────────────────────────
+*.pt *.pth *.ckpt *.bin *.tar *.zip *.h5 *.npy *.npz *.pickle *.joblib *.onnx
+*.dic *.db *.so *.pack
 
-# ── Bibliothèques compilées / bases ──────────────────────────────
-*.so
-*.db
-*.dic
-*.pack
-
-# ── Python ───────────────────────────────────────────────────────
+# ─── Python ───────────────────────────────────────────────
 *.pyc
 __pycache__/
 *.log
 
-# ── GPU libs locales à ignorer ───────────────────────────────────
-lib/*
-site-packages/*
+# ─── GPU libs locales à ignorer ───────────────────────────
+lib/
+site-packages/
 jarvisenv310/
 
-# ── Supabase ─────────────────────────────────────────────────────
-supabase/*
-
+# ─── Supabase ─────────────────────────────────────────────
+supabase/*                     # ignore tout sauf ↓
 !supabase/migrations/
 !supabase/migrations/**
 !supabase/seeders/
 !supabase/seeders/**
 
-# Supabase dossiers temporaires
+# dossiers temporaires Supabase
 supabase/.branches/
 supabase/.temp/
 
-# ── IDE / outils ────────────────────────────────────────────────
+# ─── IDE / outils ─────────────────────────────────────────
 .vscode/
 
-# ── Node ────────────────────────────────────────────────────────
+# ─── Node ─────────────────────────────────────────────────
 node_modules/
 package-lock.json

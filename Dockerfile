@@ -1,23 +1,26 @@
-FROM ghcr.io/openai/codex-universal:latest
+# base image plus légère qu’openai/codex-universal pour builder rapidement
+FROM python:3.12-slim AS base
 
-# ── Bash, Python3 + Node.js 22 ─────────────────────────────────────────────────
-RUN apt-get update \
- && apt-get install -y --no-install-recommends \
-        bash \
-        curl \
-        gnupg \
-        ca-certificates \
-        python3 \
-        python3-pip \
-        python3-venv \
+# ── OS deps + Node 22 ─────────────────────────────────────
+RUN apt-get update -y \
+ && apt-get install -y --no-install-recommends curl gnupg git ca-certificates \
  && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
  && apt-get install -y --no-install-recommends nodejs \
  && rm -rf /var/lib/apt/lists/*
 
+# ── venv isolé ────────────────────────────────────────────
+ENV VENV_PATH=/venv
+RUN python -m venv $VENV_PATH
+ENV PATH="$VENV_PATH/bin:$PATH"
+
+# ── Python deps ───────────────────────────────────────────
 WORKDIR /workspace
+COPY requirements_jarvys_core.txt .
+RUN pip install --upgrade pip \
+ && pip install --no-cache-dir -r requirements_jarvys_core.txt
+
+# ── Code + script exécutable ──────────────────────────────
 COPY . .
+RUN chmod +x jarvys_dev.sh && sed -i 's/\r$//' jarvys_dev.sh
 
-RUN sed -i 's/\r$//' jarvys_dev.sh \
- && chmod +x jarvys_dev.sh
-
-ENTRYPOINT ["/bin/bash", "./jarvys_dev.sh"]
+ENTRYPOINT ["bash", "./jarvys_dev.sh"]
