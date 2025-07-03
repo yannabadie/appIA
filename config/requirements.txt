@@ -1,5 +1,0 @@
-openai
-python-dotenv
-sounddevice
-TTS
-# Ajoute ici tes dépendances

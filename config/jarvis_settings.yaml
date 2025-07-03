@@ -1,5 +1,0 @@
-# Config Jarvis AI (à compléter)
-lang: fr
-voice: tts_models/fr/mai/tacotron2-DDC
-ui_port: 8501
-memory_dir: logs/

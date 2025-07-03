@@ -1,6 +1,0 @@
-
---- .env trouvé ---
-   VITE_AI_NAME=Jarvis
-   VITE_USER_NAME=Yann
-
-=== FIN AUDIT ===
