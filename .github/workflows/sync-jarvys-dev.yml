@@ -1,0 +1,68 @@
+name: 🔄 Sync with JARVYS_DEV
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *'  # Toutes les 6 heures
+
+jobs:
+  sync-with-jarvys-dev:
+    runs-on: ubuntu-latest
+    name: 🔄 Synchronisation avec JARVYS_DEV
+    
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: 📦 Install dependencies
+        run: |
+          pip install requests python-dotenv
+      
+      - name: 🔄 Sync status and memory
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          JARVYS_DEV_REPO: ${{ secrets.JARVYS_DEV_REPO }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          echo "🔄 Synchronisation avec JARVYS_DEV"
+          
+          # Mise à jour du statut dans la base partagée
+          python -c "
+import requests
+import json
+from datetime import datetime
+
+# Mettre à jour le statut JARVYS_AI
+status_data = {
+    'agent_id': 'jarvys_ai_local',
+    'status': 'active',
+    'last_seen': datetime.now().isoformat(),
+    'capabilities': ['code_analysis', 'local_execution', 'repository_management'],
+    'location': 'github_actions',
+    'version': '1.0.0'
+}
+
+headers = {
+    'apikey': '${{ secrets.SUPABASE_KEY }}',
+    'Authorization': 'Bearer ${{ secrets.SUPABASE_KEY }}',
+    'Content-Type': 'application/json'
+}
+
+try:
+    response = requests.post(
+        '${{ secrets.SUPABASE_URL }}/rest/v1/jarvys_agents_status',
+        headers=headers,
+        json=status_data
+    )
+    print(f'✅ Statut mis à jour: {response.status_code}')
+except Exception as e:
+    print(f'⚠️ Erreur sync: {e}')
+          "
+          
+          echo "✅ Synchronisation terminée"
