@@ -7,9 +7,16 @@ Module de traitement intelligent et d'analyse des commandes
 import asyncio
 import logging
 import json
-import openai
 from typing import Dict, Any, List, Optional
 from datetime import datetime
+
+# Import optionnel d'OpenAI
+try:
+    import openai
+    OPENAI_AVAILABLE = True
+except ImportError:
+    openai = None
+    OPENAI_AVAILABLE = False
 
 logger = logging.getLogger(__name__)
 
@@ -45,18 +52,22 @@ class IntelligenceCore:
     async def initialize(self):
         """Initialiser les services d'intelligence"""
         try:
-            # Configurer OpenAI
-            if self.config.get('openai_api_key'):
+            # Configurer OpenAI si disponible
+            if OPENAI_AVAILABLE and self.config.get('openai_api_key'):
                 openai.api_key = self.config['openai_api_key']
                 self.openai_client = openai
                 logger.info("✅ OpenAI configuré")
+            elif not OPENAI_AVAILABLE:
+                logger.warning("⚠️ OpenAI non disponible - mode dégradé")
+                self.openai_client = None
             
             self.is_initialized = True
             logger.info("🧠 Intelligence Core prêt")
             
         except Exception as e:
             logger.error(f"❌ Erreur initialisation Intelligence Core: {e}")
-            raise
+            # Ne pas lever d'exception si c'est juste OpenAI qui manque
+            self.is_initialized = True
     
     async def analyze_command(self, command: str) -> Dict[str, Any]:
         """

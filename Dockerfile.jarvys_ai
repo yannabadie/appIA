@@ -1,0 +1,74 @@
+# 🤖 JARVYS_AI - Docker Image for Windows 11 Support
+FROM python:3.11-slim-bullseye
+
+# Métadonnées
+LABEL maintainer="JARVYS_DEV"
+LABEL description="JARVYS_AI - Digital Twin de Yann Abadie avec support Windows 11"
+LABEL version="1.0.0"
+
+# Variables d'environnement
+ENV PYTHONPATH=/app/src
+ENV JARVYS_MODE=production
+ENV JARVYS_AGENT_TYPE=local
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Mise à jour système et installation des dépendances système
+RUN apt-get update && apt-get install -y \
+    # Dépendances pour l'audio (Voice Interface)
+    libasound2-dev \
+    portaudio19-dev \
+    pulseaudio \
+    alsa-utils \
+    # Dépendances pour les graphiques
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    # Outils système
+    git \
+    curl \
+    wget \
+    nano \
+    # Nettoyage
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Créer utilisateur non-root pour la sécurité
+RUN useradd -m -u 1000 jarvys && \
+    mkdir -p /app /app/logs /app/data && \
+    chown -R jarvys:jarvys /app
+
+# Changer vers l'utilisateur jarvys
+USER jarvys
+WORKDIR /app
+
+# Copier les fichiers de configuration
+COPY --chown=jarvys:jarvys requirements.txt .
+COPY --chown=jarvys:jarvys config/ ./config/
+COPY --chown=jarvys:jarvys .env.template .env
+
+# Installer les dépendances Python
+RUN pip install --user --upgrade pip && \
+    pip install --user --no-cache-dir -r requirements.txt
+
+# Copier le code source
+COPY --chown=jarvys:jarvys src/ ./src/
+
+# Créer les répertoires nécessaires
+RUN mkdir -p ~/.jarvys_ai/cache ~/.jarvys_ai/logs ~/.jarvys_ai/data
+
+# Exposer les ports
+EXPOSE 8000 8001 8080
+
+# Point d'entrée pour JARVYS_AI
+COPY --chown=jarvys:jarvys docker-entrypoint.sh .
+RUN chmod +x docker-entrypoint.sh
+
+# Volumes pour la persistance
+VOLUME ["/app/data", "/app/logs"]
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD python src/jarvys_ai/main.py --health-check || exit 1
+
+# Commande par défaut
+ENTRYPOINT ["./docker-entrypoint.sh"]
+CMD ["--mode=autonomous"]
