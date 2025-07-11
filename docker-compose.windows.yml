@@ -1,0 +1,152 @@
+# 🤖 JARVYS_AI - Docker Compose pour Windows 11
+version: '3.8'
+
+services:
+  jarvys-ai:
+    build:
+      context: .
+      dockerfile: Dockerfile.jarvys_ai
+    container_name: jarvys_ai_local
+    restart: unless-stopped
+    
+    environment:
+      # Configuration JARVYS_AI
+      - JARVYS_MODE=production
+      - JARVYS_AGENT_TYPE=local
+      - PYTHONPATH=/app/src
+      
+      # Clés API (à définir dans .env)
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      
+      # Configuration Supabase
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
+      
+      # Configuration GitHub
+      - GH_TOKEN=${GH_TOKEN}
+      - JARVYS_DEV_REPO=${JARVYS_DEV_REPO}
+      
+      # Configuration locale
+      - TZ=Europe/Paris
+      - LANG=fr_FR.UTF-8
+      
+      # Configuration audio pour Windows 11
+      - PULSE_RUNTIME_PATH=/tmp/pulse-runtime
+      - DISPLAY=${DISPLAY}
+    
+    volumes:
+      # Persistance des données
+      - jarvys_data:/app/data
+      - jarvys_logs:/app/logs
+      - jarvys_cache:/home/jarvys/.jarvys_ai/cache
+      
+      # Configuration locale (optionnel)
+      - ./config:/app/config:ro
+      
+      # Pour l'accès audio sur Windows 11
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - /mnt/wslg:/mnt/wslg:rw
+      - /usr/share/fonts:/usr/share/fonts:ro
+    
+    ports:
+      # API JARVYS_AI
+      - "8000:8000"
+      # Dashboard local
+      - "8001:8001"
+      # Monitoring
+      - "8080:8080"
+    
+    networks:
+      - jarvys_network
+    
+    # Ressources pour Windows 11
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '0.5'
+          memory: 1G
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "python", "src/jarvys_ai/main.py", "--health-check"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    
+    # Redémarrage automatique
+    depends_on:
+      - redis-cache
+    
+    # Commande par défaut
+    command: ["--mode=autonomous", "--enable-voice", "--enable-email"]
+
+  # Cache Redis pour JARVYS_AI
+  redis-cache:
+    image: redis:7-alpine
+    container_name: jarvys_redis
+    restart: unless-stopped
+    
+    volumes:
+      - redis_data:/data
+    
+    ports:
+      - "6379:6379"
+    
+    networks:
+      - jarvys_network
+    
+    # Configuration Redis optimisée
+    command: >
+      redis-server
+      --appendonly yes
+      --appendfsync everysec
+      --maxmemory 512mb
+      --maxmemory-policy allkeys-lru
+
+  # Dashboard local (optionnel)
+  jarvys-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile.jarvys_ai
+    container_name: jarvys_dashboard
+    restart: unless-stopped
+    
+    environment:
+      - JARVYS_MODE=dashboard
+      - PYTHONPATH=/app/src
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_KEY=${SUPABASE_KEY}
+    
+    ports:
+      - "3000:3000"
+    
+    networks:
+      - jarvys_network
+    
+    depends_on:
+      - jarvys-ai
+    
+    command: ["python", "src/jarvys_ai/dashboard_integration.py", "--mode=local-server"]
+
+# Réseaux
+networks:
+  jarvys_network:
+    driver: bridge
+    name: jarvys_network
+
+# Volumes persistants
+volumes:
+  jarvys_data:
+    name: jarvys_ai_data
+  jarvys_logs:
+    name: jarvys_ai_logs
+  jarvys_cache:
+    name: jarvys_ai_cache
+  redis_data:
+    name: jarvys_redis_data
