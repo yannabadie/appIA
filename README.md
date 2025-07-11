@@ -14,7 +14,7 @@ JARVYS_AI est un agent d'intelligence artificielle autonome créé par JARVYS_DE
 
 ### 🎯 Gestion Intelligente du Routage
 - Analyse de l'efficacité du routage vers les modèles IA
-- Optimisation automatique des routes (Claude 3.5 Sonnet, GPT-4, Gemini Pro)
+- Optimisation automatique des routes (Claude 4 Sonnet, GPT-4 et suivants, Gemini Pro)
 - Monitoring de la performance par modèle
 - **Modèles actifs**: 3 (Claude, GPT, Gemini)
 
