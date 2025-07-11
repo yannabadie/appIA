@@ -1,0 +1,35 @@
+{
+  "jarvys_ai": {
+    "version": "1.0.0",
+    "agent_type": "local",
+    "created_date": "2025-07-11T09:58:22.556907",
+    "capabilities": [
+      "code_analysis",
+      "repository_management",
+      "local_execution",
+      "file_operations",
+      "git_operations",
+      "issue_handling",
+      "continuous_improvement",
+      "dashboard_integration"
+    ],
+    "integrations": {
+      "jarvys_dev_repo": "yannabadie/appia-dev",
+      "dashboard_url": "https://kzcswopokvknxmxczilu.supabase.co/functions/v1/jarvys-dashboard",
+      "memory_shared": true,
+      "sync_interval_hours": 6
+    },
+    "execution": {
+      "github_actions": true,
+      "docker_support": true,
+      "local_fallback": true,
+      "cloud_run_backup": true
+    },
+    "ai_models": {
+      "primary": "gpt-4",
+      "secondary": "claude-3-sonnet",
+      "local_fallback": "gpt-3.5-turbo",
+      "cost_optimization": true
+    }
+  }
+}
