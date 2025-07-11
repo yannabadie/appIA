@@ -42,9 +42,11 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
       
-      - name: 📦 Install dependencies
-        run: |
-          pip install -r requirements.txt
+      - name: 🔧 Install system dependencies
+        run: ./scripts/install_system_deps.sh
+      
+      - name: 📦 Install Python dependencies
+        run: ./scripts/install_python_deps.sh
       
       - name: 🤖 Process JARVYS_DEV issue
         env:
@@ -61,7 +63,11 @@ jobs:
           echo "📋 Titre: $ISSUE_TITLE"
           
           # Lancer JARVYS_AI pour traiter l'issue
-          python src/jarvys_ai/main.py             --mode=issue_handler             --issue-number="$ISSUE_NUMBER"             --issue-title="$ISSUE_TITLE"             --issue-body="$ISSUE_BODY"
+          python src/jarvys_ai/main.py \
+            --mode=issue_handler \
+            --issue-number="$ISSUE_NUMBER" \
+            --issue-title="$ISSUE_TITLE" \
+            --issue-body="$ISSUE_BODY"
       
       - name: ✅ Marquer issue comme traitée
         uses: actions/github-script@v6
@@ -104,9 +110,11 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
       
-      - name: 📦 Install dependencies
-        run: |
-          pip install -r requirements.txt
+      - name: 🔧 Install system dependencies
+        run: ./scripts/install_system_deps.sh
+      
+      - name: 📦 Install Python dependencies
+        run: ./scripts/install_python_deps.sh
       
       - name: 🤖 Run JARVYS_AI autonomous loop
         env:
@@ -123,7 +131,10 @@ jobs:
           
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "📋 Tâche manuelle: $TASK_INPUT (priorité: $TASK_PRIORITY)"
-            python src/jarvys_ai/main.py               --mode=manual_task               --task="$TASK_INPUT"               --priority="$TASK_PRIORITY"
+            python src/jarvys_ai/main.py \
+              --mode=manual_task \
+              --task="$TASK_INPUT" \
+              --priority="$TASK_PRIORITY"
           else
             echo "⏰ Boucle programmée toutes les 30 minutes"
             python src/jarvys_ai/main.py --mode=autonomous
@@ -155,9 +166,13 @@ jobs:
           echo "❤️ Vérification de santé JARVYS_AI"
           
           # Test connexion Supabase
-          curl -f "$SUPABASE_URL/rest/v1/"             -H "apikey: $SUPABASE_KEY"             || echo "⚠️ Problème connexion Supabase"
+          curl -f "$SUPABASE_URL/rest/v1/" \
+            -H "apikey: $SUPABASE_KEY" \
+            || echo "⚠️ Problème connexion Supabase"
           
           # Test GitHub API
-          curl -f "https://api.github.com/user"             -H "Authorization: token $GH_TOKEN"             || echo "⚠️ Problème connexion GitHub"
+          curl -f "https://api.github.com/user" \
+            -H "Authorization: token $GH_TOKEN" \
+            || echo "⚠️ Problème connexion GitHub"
           
           echo "✅ Vérification terminée"
