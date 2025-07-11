@@ -1,0 +1,163 @@
+name: 🤖 JARVYS_AI - Agent Local Autonome
+
+on:
+  issues:
+    types: [opened, reopened]
+  workflow_dispatch:
+    inputs:
+      task:
+        description: 'Tâche à exécuter par JARVYS_AI'
+        required: true
+        type: string
+      priority:
+        description: 'Priorité de la tâche'
+        required: false
+        default: 'medium'
+        type: choice
+        options:
+          - low
+          - medium
+          - high
+          - critical
+  schedule:
+    - cron: '*/30 * * * *'  # Toutes les 30 minutes
+
+env:
+  JARVYS_MODE: production
+  JARVYS_AGENT_TYPE: local
+
+jobs:
+  jarvys-ai-handler:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'from_jarvys_dev')
+    name: 🤖 Traitement issue JARVYS_DEV
+    
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: 📦 Install dependencies
+        run: |
+          pip install -r requirements.txt
+      
+      - name: 🤖 Process JARVYS_DEV issue
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          echo "🤖 JARVYS_AI traite l'issue #$ISSUE_NUMBER"
+          echo "📋 Titre: $ISSUE_TITLE"
+          
+          # Lancer JARVYS_AI pour traiter l'issue
+          python src/jarvys_ai/main.py             --mode=issue_handler             --issue-number="$ISSUE_NUMBER"             --issue-title="$ISSUE_TITLE"             --issue-body="$ISSUE_BODY"
+      
+      - name: ✅ Marquer issue comme traitée
+        uses: actions/github-script@v6
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        with:
+          script: |
+            const issueNumber = process.env.ISSUE_NUMBER;
+            
+            // Commenter l'issue
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: issueNumber,
+              body: "✅ **JARVYS_AI a traité cette tâche**\n\n" +
+                    "🤖 Agent local autonome activé\n" +
+                    "📊 Analyse et exécution terminées\n" +
+                    "⏰ Traité le: " + new Date().toISOString() + "\n\n" +
+                    "*Tâche automatiquement fermée par JARVYS_AI*"
+            });
+            
+            // Fermer l'issue
+            await github.rest.issues.update({
+              ...context.repo,
+              issue_number: issueNumber,
+              state: 'closed'
+            });
+
+  jarvys-ai-autonomous:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    name: 🔄 Boucle autonome JARVYS_AI
+    
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: 📦 Install dependencies
+        run: |
+          pip install -r requirements.txt
+      
+      - name: 🤖 Run JARVYS_AI autonomous loop
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          JARVYS_DEV_REPO: ${{ secrets.JARVYS_DEV_REPO }}
+          TASK_INPUT: ${{ inputs.task }}
+          TASK_PRIORITY: ${{ inputs.priority }}
+        run: |
+          echo "🔄 Démarrage de la boucle autonome JARVYS_AI"
+          
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "📋 Tâche manuelle: $TASK_INPUT (priorité: $TASK_PRIORITY)"
+            python src/jarvys_ai/main.py               --mode=manual_task               --task="$TASK_INPUT"               --priority="$TASK_PRIORITY"
+          else
+            echo "⏰ Boucle programmée toutes les 30 minutes"
+            python src/jarvys_ai/main.py --mode=autonomous
+          fi
+      
+      - name: 📊 Report metrics to dashboard
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: |
+          echo "📊 Envoi des métriques au dashboard JARVYS_DEV"
+          python src/jarvys_ai/dashboard_integration.py --report-metrics
+
+  jarvys-ai-health-check:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule'
+    name: ❤️ Vérification santé JARVYS_AI
+    
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: ❤️ Health check and self-diagnosis
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          echo "❤️ Vérification de santé JARVYS_AI"
+          
+          # Test connexion Supabase
+          curl -f "$SUPABASE_URL/rest/v1/"             -H "apikey: $SUPABASE_KEY"             || echo "⚠️ Problème connexion Supabase"
+          
+          # Test GitHub API
+          curl -f "https://api.github.com/user"             -H "Authorization: token $GH_TOKEN"             || echo "⚠️ Problème connexion GitHub"
+          
+          echo "✅ Vérification terminée"
