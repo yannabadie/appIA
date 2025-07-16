@@ -38,7 +38,7 @@ class CloudManager:
         }
 
         # Configuration MCP (Model Context Protocol)
-        self.mcp_config = {}
+        self.mcp_config
 
         # Simulation pour démo
         self.demo_mode = config.get("demo_mode", True)

@@ -27,7 +27,7 @@ class IntelligenceCore:
     def __init__(self, config: Dict[str, Any]):
         """Initialiser le cœur d'intelligence"""
         self.config = config
-        self.openai_client = None
+        self.openai_client
         self.is_initialized = False
 
         # Modèles de classification

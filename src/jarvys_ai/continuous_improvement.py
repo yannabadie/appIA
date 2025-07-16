@@ -418,7 +418,7 @@ class ContinuousImprovement:
             # TODO: Envoyer rapport à JARVYS_DEV
             pass
 
-    async def _report_update_failure(self, update: Dict[str, Any], error: str = None):
+    async def _report_update_failure(self, update: Dict[str, Any], error: str):
         """Rapporter l'échec d'une mise à jour à JARVYS_DEV"""
         {
             "device_id": self.device_id,
