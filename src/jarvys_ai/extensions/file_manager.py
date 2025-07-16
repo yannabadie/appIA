@@ -190,13 +190,19 @@ class FileManager:
                 return await self._handle_file_search(command)
             elif any(word in command_lower for word in ["ouvrir", "open"]):
                 return await self._handle_open_file(command)
-            elif any(word in command_lower for word in ["créer", "create", "nouveau"]):
+            elif any(
+                word in command_lower
+                for word in ["créer", "create", "nouveau"]
+            ):
                 return await self._handle_create_file(command)
             elif any(
-                word in command_lower for word in ["déplacer", "move", "copier", "copy"]
+                word in command_lower
+                for word in ["déplacer", "move", "copier", "copy"]
             ):
                 return await self._handle_file_operation(command)
-            elif any(word in command_lower for word in ["sync", "synchroniser"]):
+            elif any(
+                word in command_lower for word in ["sync", "synchroniser"]
+            ):
                 return await self._handle_sync_command(command)
             elif any(word in command_lower for word in ["récent", "recent"]):
                 return await self._handle_recent_files()
@@ -220,16 +226,12 @@ class FileManager:
             if not results:
                 return f"❌ Aucun fichier trouvé pour '{search_term}'"
 
-            response = (
-                f"🔍 **Résultats pour '{search_term}'** ({len(results)} fichiers):\n\n"
-            )
+            response = f"🔍 **Résultats pour '{search_term}'** ({len(results)} fichiers):\n\n"
 
             for i, file_info in enumerate(results[:5], 1):
                 response += f"{i}. 📄 **{file_info['name']}**\n"
                 response += f"   📁 {file_info['directory']}\n"
-                response += (
-                    f"   📊 {file_info['size']} | 📅 {file_info['modified']}\n\n"
-                )
+                response += f"   📊 {file_info['size']} | 📅 {file_info['modified']}\n\n"
 
             if len(results) > 5:
                 response += f"... et {len(results) - 5} autres fichiers.\n"
@@ -273,7 +275,9 @@ class FileManager:
                         "name": Path(file_info["path"]).name,
                         "path": file_info["path"],
                         "size": self._format_file_size(file_info["size"]),
-                        "modified": file_info["modified"].strftime("%d/%m/%Y %H:%M"),
+                        "modified": file_info["modified"].strftime(
+                            "%d/%m/%Y %H:%M"
+                        ),
                         "directory": file_info["directory"],
                     }
                 )
@@ -430,7 +434,7 @@ L'opération s'est déroulée avec succès."""
 
 📊 **Google Drive**:
 - 🟡 **État**: Synchronisation en cours...
-- 📦 **Utilisé**: 8.7 GB / 15 GB  
+- 📦 **Utilisé**: 8.7 GB / 15 GB
 - ⏰ **Dernière sync**: 12:45
 - 📄 **Fichiers en attente**: 3
 
@@ -448,7 +452,9 @@ L'opération s'est déroulée avec succès."""
         for i, file_info in enumerate(self.recent_files[:5], 1):
             response += f"{i}. 📄 **{file_info['name']}**\n"
             response += f"   📁 {file_info['path'].name}\n"
-            response += f"   📊 {file_info['size']} | 📅 {file_info['modified']}\n\n"
+            response += (
+                f"   📊 {file_info['size']} | 📅 {file_info['modified']}\n\n"
+            )
 
         response += "💡 Dites 'Ouvrir [nom]' pour ouvrir un fichier."
 

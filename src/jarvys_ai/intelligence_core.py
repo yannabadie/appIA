@@ -49,7 +49,14 @@ class IntelligenceCore:
                 "ouvrir",
                 "créer",
             ],
-            "cloud": ["cloud", "gcp", "google", "deployer", "instance", "kubernetes"],
+            "cloud": [
+                "cloud",
+                "gcp",
+                "google",
+                "deployer",
+                "instance",
+                "kubernetes",
+            ],
             "voice": ["dire", "parler", "voice", "audio", "écouter"],
             "system": ["système", "status", "état", "redémarrer", "arrêter"],
             "general": ["aide", "help", "comment", "quoi", "qui", "pourquoi"],
@@ -143,7 +150,10 @@ class IntelligenceCore:
                         "role": "system",
                         "content": "Tu es JARVYS_AI, assistant de Yann Abadie. Analyse cette commande et détermine son type et contexte.",
                     },
-                    {"role": "user", "content": f"Analyse cette commande: {command}"},
+                    {
+                        "role": "user",
+                        "content": f"Analyse cette commande: {command}",
+                    },
                 ],
                 max_tokens=150,
                 temperature=0.3,
@@ -244,7 +254,9 @@ class IntelligenceCore:
             if keyword in command_lower:
                 return response
 
-        return "Je suis là pour vous aider. Pouvez-vous préciser votre demande ?"
+        return (
+            "Je suis là pour vous aider. Pouvez-vous préciser votre demande ?"
+        )
 
     def get_stats(self) -> Dict[str, Any]:
         """Obtenir statistiques du cœur d'intelligence"""

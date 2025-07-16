@@ -23,7 +23,8 @@ from .extensions.file_manager import FileManager
 
 # Configuration logging
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - JARVYS_AI - %(levelname)s - %(message)s"
+    level=logging.INFO,
+    format="%(asctime)s - JARVYS_AI - %(levelname)s - %(message)s",
 )
 logger = logging.getLogger(__name__)
 
@@ -164,7 +165,9 @@ class JarvysAI:
         # TODO: Implémenter check améliorations
         pass
 
-    async def process_command(self, command: str, interface: str = "text") -> str:
+    async def process_command(
+        self, command: str, interface: str = "text"
+    ) -> str:
         """
         Traiter une commande utilisateur
 
@@ -185,7 +188,9 @@ class JarvysAI:
             response = await self._route_command(analysis, command)
 
             # Mettre à jour le jumeau numérique
-            await self.digital_twin.update_interaction(command, response, interface)
+            await self.digital_twin.update_interaction(
+                command, response, interface
+            )
 
             return response
 
@@ -194,7 +199,9 @@ class JarvysAI:
             logger.error(error_msg)
             return error_msg
 
-    async def _route_command(self, analysis: Dict[str, Any], command: str) -> str:
+    async def _route_command(
+        self, analysis: Dict[str, Any], command: str
+    ) -> str:
         """Router la commande vers l'extension appropriée"""
         command_type = analysis.get("type", "general")
 
@@ -205,7 +212,9 @@ class JarvysAI:
         elif command_type == "cloud":
             return await self.extensions["cloud"].process_command(command)
         else:
-            return await self.intelligence_core.process_general_command(command)
+            return await self.intelligence_core.process_general_command(
+                command
+            )
 
     def get_status(self) -> Dict[str, Any]:
         """Obtenir le statut actuel de JARVYS_AI"""
@@ -213,7 +222,8 @@ class JarvysAI:
             "is_running": self.is_running,
             "session_id": self.session_id,
             "extensions": {
-                name: ext.is_initialized() for name, ext in self.extensions.items()
+                name: ext.is_initialized()
+                for name, ext in self.extensions.items()
             },
             "tasks_count": len(self.tasks),
             "continuous_improvement": (

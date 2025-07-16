@@ -124,13 +124,18 @@ class CloudManager:
 
             if any(word in command_lower for word in ["deploy", "déployer"]):
                 return await self._handle_deployment(command)
-            elif any(word in command_lower for word in ["cost", "coût", "facture"]):
+            elif any(
+                word in command_lower for word in ["cost", "coût", "facture"]
+            ):
                 return await self._handle_cost_query(command)
             elif any(
-                word in command_lower for word in ["status", "état", "monitoring"]
+                word in command_lower
+                for word in ["status", "état", "monitoring"]
             ):
                 return await self._handle_status_query(command)
-            elif any(word in command_lower for word in ["backup", "sauvegarde"]):
+            elif any(
+                word in command_lower for word in ["backup", "sauvegarde"]
+            ):
                 return await self._handle_backup_command(command)
             elif "mcp" in command_lower:
                 return await self._handle_mcp_command(command)
@@ -190,7 +195,7 @@ class CloudManager:
 
 📊 **Détails**:
 - 🏷️ Nom: jarvys-dashboard-app
-- 🌍 Région: West Europe  
+- 🌍 Région: West Europe
 - 🔗 URL: https://jarvys-dashboard.azurewebsites.net
 - 📦 Instances: 2 (Auto-scaling activé)
 - 💰 Coût estimé: $15.50/mois
@@ -291,7 +296,7 @@ Quel type de déploiement souhaitez-vous ?"""
 - 🟢 Cloud Storage: 2.1 TB utilisés
 - 🟢 Cloud Functions: 12 fonctions déployées
 
-🔷 **Microsoft Azure**:  
+🔷 **Microsoft Azure**:
 - 🟢 App Service: 2 applications en ligne
 - 🟢 Storage Account: 850 GB utilisés
 - 🟡 Cognitive Services: Limite proche (85%)
@@ -359,7 +364,7 @@ Quel type de déploiement souhaitez-vous ?"""
 1. 🗓️ **backup-20240115-143022** (Aujourd'hui 14:30)
    - Taille: 2.3 GB | État: ✅ Complète
 
-2. 🗓️ **backup-20240114-143017** (Hier 14:30)  
+2. 🗓️ **backup-20240114-143017** (Hier 14:30)
    - Taille: 2.1 GB | État: ✅ Complète
 
 3. 🗓️ **backup-20240113-143012** (Il y a 2 jours)
@@ -389,7 +394,9 @@ Commandes: "Restaurer backup-[ID]" ou "Créer backup"."""
     async def _get_mcp_status(self) -> str:
         """Obtenir statut MCP"""
         active_servers = sum(
-            1 for server in self.mcp_config["servers"] if server["status"] == "active"
+            1
+            for server in self.mcp_config["servers"]
+            if server["status"] == "active"
         )
         total_servers = len(self.mcp_config["servers"])
 
@@ -400,7 +407,7 @@ Commandes: "Restaurer backup-[ID]" ou "Créer backup"."""
 
 📋 **Serveurs MCP**:
 - 🟢 **filesystem**: Accès fichiers locaux
-- 🟢 **git**: Intégration Git/GitHub  
+- 🟢 **git**: Intégration Git/GitHub
 - 🔴 **postgres**: Base de données (inactive)
 
 🔧 **Fonctionnalités disponibles**:
@@ -424,7 +431,7 @@ Commandes: "Restaurer backup-[ID]" ou "Créer backup"."""
 
 🔧 **Commandes disponibles**:
 - "Déployer [type] [nom]" - Déploiement services
-- "Coût cloud" / "Facture" - Rapports financiers  
+- "Coût cloud" / "Facture" - Rapports financiers
 - "Status cloud" - État des services
 - "Créer backup" - Sauvegarde système
 - "MCP status" - État Model Context Protocol
@@ -451,7 +458,8 @@ Comment puis-je vous aider avec vos services cloud ?"""
         )
 
         total_cost_today = sum(
-            provider.get("cost_today", 0) for provider in self.cloud_providers.values()
+            provider.get("cost_today", 0)
+            for provider in self.cloud_providers.values()
         )
 
         return {
