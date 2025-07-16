@@ -6,7 +6,7 @@ Interface vocale avec reconnaissance et synthèse vocale
 
 import asyncio
 import logging
-from typing import Dict, Any, Optional, Callable
+from typing import Any, Callable, Dict, Optional
 
 logger = logging.getLogger(__name__)
 

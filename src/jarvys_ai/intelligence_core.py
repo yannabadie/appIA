@@ -5,9 +5,10 @@ Module de traitement intelligent et d'analyse des commandes
 """
 
 import logging
-import openai
-from typing import Dict, Any, List
 from datetime import datetime
+from typing import Any, Dict, List
+
+import openai
 
 logger = logging.getLogger(__name__)
 

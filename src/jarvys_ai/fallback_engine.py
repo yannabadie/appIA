@@ -6,10 +6,11 @@ Système de fallback vers Cloud Run quand GitHub Actions quotas épuisés
 
 import asyncio
 import logging
-import requests
-from typing import Dict, Any
-from datetime import datetime
 import subprocess
+from datetime import datetime
+from typing import Any, Dict
+
+import requests
 
 logger = logging.getLogger(__name__)
 

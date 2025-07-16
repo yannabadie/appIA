@@ -9,17 +9,17 @@ Module principal pour l'initialisation et l'orchestration de tous les composants
 import asyncio
 import logging
 import os
-from typing import Dict, Any, Optional
 from datetime import datetime
+from typing import Any, Dict, Optional
 
-from .intelligence_core import IntelligenceCore
-from .digital_twin import DigitalTwin
 from .continuous_improvement import ContinuousImprovement
-from .fallback_engine import FallbackEngine
-from .extensions.email_manager import EmailManager
-from .extensions.voice_interface import VoiceInterface
+from .digital_twin import DigitalTwin
 from .extensions.cloud_manager import CloudManager
+from .extensions.email_manager import EmailManager
 from .extensions.file_manager import FileManager
+from .extensions.voice_interface import VoiceInterface
+from .fallback_engine import FallbackEngine
+from .intelligence_core import IntelligenceCore
 
 # Configuration logging
 logging.basicConfig(

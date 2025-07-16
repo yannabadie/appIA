@@ -5,12 +5,13 @@ Connexion entre JARVYS_AI local et dashboard JARVYS_DEV cloud
 """
 
 import asyncio
-import logging
 import json
+import logging
 import os
-import requests
-from typing import Dict, Any
 from datetime import datetime
+from typing import Any, Dict
+
+import requests
 
 logger = logging.getLogger(__name__)
 
@@ -50,9 +51,9 @@ class SupabaseDashboardIntegration:
 
     def _generate_device_id(self) -> str:
         """Générer ID unique de l'appareil"""
-        import socket
         import getpass
         import hashlib
+        import socket
 
         identifier = f"jarvys_ai_local_{socket.gethostname()}_{getpass.getuser()}"
         return hashlib.sha256(identifier.encode()).hexdigest()[:16]

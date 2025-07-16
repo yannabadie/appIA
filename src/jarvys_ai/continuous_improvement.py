@@ -5,17 +5,18 @@ Advanced self-improvement connected to JARVYS_DEV with real-time sync
 """
 
 import asyncio
+import hashlib
 import logging
 import os
+import shutil
 import subprocess
 import tempfile
-import shutil
-from typing import Dict, Any, List, Optional
-from datetime import datetime
-import requests
-import hashlib
 import threading
+from datetime import datetime
 from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+import requests
 
 logger = logging.getLogger(__name__)
 
@@ -95,8 +96,8 @@ class ContinuousImprovement:
     def _generate_device_id(self) -> str:
         """Générer ID unique de l'appareil"""
         # Utiliser hostname + user pour générer un ID stable
-        import socket
         import getpass
+        import socket
 
         identifier = f"{socket.gethostname()}-{getpass.getuser()}"
         return hashlib.sha256(identifier.encode()).hexdigest()[:16]

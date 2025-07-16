@@ -7,8 +7,8 @@ Gestion automatisée des emails Outlook/Gmail avec IA
 import asyncio
 import logging
 import re
-from typing import Dict, Any, List, Optional
 from datetime import datetime
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 

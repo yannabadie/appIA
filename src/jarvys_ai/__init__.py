@@ -15,10 +15,10 @@ __version__ = "1.0.0"
 __author__ = "JARVYS_DEV"
 __description__ = "Digital Twin de Yann Abadie - Agent d'Intelligence Hybride"
 
-from .intelligence_core import IntelligenceCore
-from .digital_twin import DigitalTwin
 from .continuous_improvement import ContinuousImprovement
+from .digital_twin import DigitalTwin
 from .fallback_engine import FallbackEngine
+from .intelligence_core import IntelligenceCore
 from .main import JarvysAI
 
 __all__ = [
