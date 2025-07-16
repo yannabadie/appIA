@@ -4,7 +4,7 @@ Agent d'Intelligence Locale/Hybride avec capacités humaines illimitées
 
 JARVYS_AI est le jumeau numérique de Yann Abadie, conçu pour fournir:
 - Interface voix/texte naturelle
-- Gestion email (Outlook/Gmail) 
+- Gestion email (Outlook/Gmail)
 - Intégration cloud (GCP/MCP)
 - Gestion fichiers locale/cloud
 - Support Docker Windows 11
@@ -26,5 +26,5 @@ __all__ = [
     "DigitalTwin",
     "ContinuousImprovement",
     "FallbackEngine",
-    "JarvysAI"
+    "JarvysAI",
 ]
