@@ -1,0 +1,43 @@
+# .pre-commit-config.yaml
+---
+repos:
+  - repo: https://github.com/psf/black
+    rev: 25.1.0
+    hooks:
+      - id: black
+        language_version: python3.12
+
+  - repo: https://github.com/pycqa/isort
+    rev: 6.0.1
+    hooks:
+      - id: isort
+        name: isort (imports)
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.5.5
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
+
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.37.1
+    hooks:
+      - id: yamllint
+
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.45.0
+    hooks:
+      - id: markdownlint
+        language_version: system
+
+  - repo: local
+    hooks:
+      - id: prettier
+        name: prettier
+        entry: prettier
+        language: node
+        language_version: system
+        files: \.(js|jsx|ts|tsx|json|md|markdown|yaml|yml)$
+        additional_dependencies:
+          - prettier@3.3.3
