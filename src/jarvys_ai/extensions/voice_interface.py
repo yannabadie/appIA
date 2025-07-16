@@ -225,9 +225,7 @@ class VoiceInterface:
         words_count = len(text.split())
         duration = max(1, words_count * 0.3)  # ~0.3s par mot
 
-        logger.info(
-            f"🔊 [DÉMO] Prononciation simulée ({duration:.1f}s): {text}"
-        )
+        logger.info(f"🔊 [DÉMO] Prononciation simulée ({duration:.1f}s): {text}")
         await asyncio.sleep(min(duration, 5))  # Max 5s pour démo
 
     async def _real_speak(self, text: str, voice: Optional[str] = None):
@@ -272,9 +270,7 @@ class VoiceInterface:
     async def _real_listen_once(self, timeout: int) -> Optional[str]:
         """Écoute ponctuelle réelle"""
         # TODO: Implémenter reconnaissance vocale ponctuelle
-        logger.info(
-            f"🎤 Écoute ponctuelle réelle (TODO) - timeout: {timeout}s"
-        )
+        logger.info(f"🎤 Écoute ponctuelle réelle (TODO) - timeout: {timeout}s")
         return None
 
     async def process_command(self, command: str) -> str:
@@ -282,10 +278,7 @@ class VoiceInterface:
         try:
             command_lower = command.lower()
 
-            if any(
-                word in command_lower
-                for word in ["dire", "parler", "prononcer"]
-            ):
+            if any(word in command_lower for word in ["dire", "parler", "prononcer"]):
                 # Extraire texte à prononcer
                 text_to_speak = self._extract_text_to_speak(command)
                 if text_to_speak:

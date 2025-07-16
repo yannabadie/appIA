@@ -254,9 +254,7 @@ class IntelligenceCore:
             if keyword in command_lower:
                 return response
 
-        return (
-            "Je suis là pour vous aider. Pouvez-vous préciser votre demande ?"
-        )
+        return "Je suis là pour vous aider. Pouvez-vous préciser votre demande ?"
 
     def get_stats(self) -> Dict[str, Any]:
         """Obtenir statistiques du cœur d'intelligence"""

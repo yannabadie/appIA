@@ -124,18 +124,13 @@ class CloudManager:
 
             if any(word in command_lower for word in ["deploy", "déployer"]):
                 return await self._handle_deployment(command)
-            elif any(
-                word in command_lower for word in ["cost", "coût", "facture"]
-            ):
+            elif any(word in command_lower for word in ["cost", "coût", "facture"]):
                 return await self._handle_cost_query(command)
             elif any(
-                word in command_lower
-                for word in ["status", "état", "monitoring"]
+                word in command_lower for word in ["status", "état", "monitoring"]
             ):
                 return await self._handle_status_query(command)
-            elif any(
-                word in command_lower for word in ["backup", "sauvegarde"]
-            ):
+            elif any(word in command_lower for word in ["backup", "sauvegarde"]):
                 return await self._handle_backup_command(command)
             elif "mcp" in command_lower:
                 return await self._handle_mcp_command(command)
@@ -394,9 +389,7 @@ Commandes: "Restaurer backup-[ID]" ou "Créer backup"."""
     async def _get_mcp_status(self) -> str:
         """Obtenir statut MCP"""
         active_servers = sum(
-            1
-            for server in self.mcp_config["servers"]
-            if server["status"] == "active"
+            1 for server in self.mcp_config["servers"] if server["status"] == "active"
         )
         total_servers = len(self.mcp_config["servers"])
 
@@ -458,8 +451,7 @@ Comment puis-je vous aider avec vos services cloud ?"""
         )
 
         total_cost_today = sum(
-            provider.get("cost_today", 0)
-            for provider in self.cloud_providers.values()
+            provider.get("cost_today", 0) for provider in self.cloud_providers.values()
         )
 
         return {

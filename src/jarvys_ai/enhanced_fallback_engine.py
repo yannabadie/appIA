@@ -48,9 +48,7 @@ class EnhancedFallbackEngine:
         self.service_name = config.get("service_name", "jarvys-ai-fallback")
 
         # Quota thresholds
-        self.quota_warning_threshold = config.get(
-            "quota_warning_threshold", 80
-        )  # 80%
+        self.quota_warning_threshold = config.get("quota_warning_threshold", 80)  # 80%
         self.quota_critical_threshold = config.get(
             "quota_critical_threshold", 95
         )  # 95%
@@ -112,9 +110,7 @@ class EnhancedFallbackEngine:
             self.current_quota_usage = quota_info["usage_percentage"]
             self.last_quota_check = datetime.now()
 
-            logger.debug(
-                f"📊 Current quota usage: {self.current_quota_usage}%"
-            )
+            logger.debug(f"📊 Current quota usage: {self.current_quota_usage}%")
 
             # Take action based on quota usage
             if self.current_quota_usage >= self.quota_critical_threshold:
@@ -178,9 +174,7 @@ class EnhancedFallbackEngine:
                     "usage_percentage": min(usage_percentage, 100),
                     "total_minutes": included_minutes,
                     "used_minutes": total_minutes,
-                    "remaining_minutes": max(
-                        included_minutes - total_minutes, 0
-                    ),
+                    "remaining_minutes": max(included_minutes - total_minutes, 0),
                 }
             else:
                 logger.warning(f"GitHub API returned {response.status_code}")
@@ -390,9 +384,7 @@ echo "🌐 Service URL: $SERVICE_URL"
         """Build and deploy Docker image to Cloud Run"""
         try:
             if not self.project_id:
-                logger.warning(
-                    "⚠️ GCP project ID not configured, simulating deployment"
-                )
+                logger.warning("⚠️ GCP project ID not configured, simulating deployment")
                 await asyncio.sleep(5)  # Simulate deployment time
                 return True
 
@@ -402,9 +394,7 @@ echo "🌐 Service URL: $SERVICE_URL"
 
             try:
                 # Build Docker image
-                image_name = (
-                    f"gcr.io/{self.project_id}/{self.service_name}:latest"
-                )
+                image_name = f"gcr.io/{self.project_id}/{self.service_name}:latest"
 
                 logger.info("🏗️ Building Docker image...")
                 result = subprocess.run(
@@ -462,9 +452,7 @@ echo "🌐 Service URL: $SERVICE_URL"
                 )
 
                 if result.returncode != 0:
-                    logger.error(
-                        f"Cloud Run deployment failed: {result.stderr}"
-                    )
+                    logger.error(f"Cloud Run deployment failed: {result.stderr}")
                     return False
 
                 logger.info("✅ Successfully deployed to Cloud Run")
@@ -488,9 +476,7 @@ echo "🌐 Service URL: $SERVICE_URL"
 
             # Check if quota has been low for sufficient time
             if self.current_quota_usage < 30:
-                logger.info(
-                    "🔄 Quota usage low, initiating failback to GitHub Actions"
-                )
+                logger.info("🔄 Quota usage low, initiating failback to GitHub Actions")
                 await self._failback_to_github()
 
         except Exception as e:
@@ -525,9 +511,7 @@ echo "🌐 Service URL: $SERVICE_URL"
         """Scale down Cloud Run service to minimum instances"""
         try:
             if not self.project_id:
-                logger.info(
-                    "⚠️ GCP project not configured, simulating scale down"
-                )
+                logger.info("⚠️ GCP project not configured, simulating scale down")
                 return
 
             logger.info("📉 Scaling down Cloud Run service...")
@@ -665,13 +649,9 @@ echo "🌐 Service URL: $SERVICE_URL"
             "is_deployed_to_cloud": self.is_deployed_to_cloud,
             "current_quota_usage": self.current_quota_usage,
             "last_quota_check": (
-                self.last_quota_check.isoformat()
-                if self.last_quota_check
-                else None
+                self.last_quota_check.isoformat() if self.last_quota_check else None
             ),
-            "deployment_history": self.deployment_history[
-                -5:
-            ],  # Last 5 deployments
+            "deployment_history": self.deployment_history[-5:],  # Last 5 deployments
             "config": {
                 "quota_warning_threshold": self.quota_warning_threshold,
                 "quota_critical_threshold": self.quota_critical_threshold,
