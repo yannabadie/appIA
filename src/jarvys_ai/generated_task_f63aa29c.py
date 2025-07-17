@@ -1,5 +1,5 @@
 import os
-import random
+import random  # Added missing import
 
 from supabase import Client, create_client
 from textblob import TextBlob

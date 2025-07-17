@@ -73,9 +73,9 @@ class SupabaseDashboardIntegration:
             }
 
             # Test connexion dashboard
-            response = requests.get(f"{self.dashboard_url}/health", timeout=10)
+            requests.get(f"{self.dashboard_url}/health", timeout=10)
 
-            if response.status_code == 200:
+            if _response.status_code == 200:
                 self.is_connected = True
                 logger.info("✅ Connecté au dashboard Supabase")
 
@@ -84,7 +84,7 @@ class SupabaseDashboardIntegration:
 
                 return True
             else:
-                logger.warning(f"⚠️ Dashboard non accessible: {response.status_code}")
+                logger.warning(f"⚠️ Dashboard non accessible: {_response.status_code}")
                 return False
 
         except Exception as e:
@@ -219,7 +219,7 @@ class SupabaseDashboardIntegration:
             demo_commands = ["Status JARVYS_AI", "Lire emails", "Sync cloud"]
 
             # Simuler réception commande occasionnelle
-            import random
+            import random  # Added missing import
 
             if random.random() < 0.1:  # 10% de chance
                 command = random.choice(demo_commands)
@@ -227,10 +227,8 @@ class SupabaseDashboardIntegration:
 
                 # Traiter la commande
                 if self.jarvys_ai:
-                    response = await self.jarvys_ai.process_command(
-                        command, "dashboard"
-                    )
-                    logger.info(f"📤 Réponse envoyée: {response[:50]}...")
+                    await self.jarvys_ai.process_command(command, "dashboard")
+                    logger.info(f"📤 Réponse envoyée: {_response[:50]}...")
 
         except Exception as e:
             logger.error(f"❌ Erreur check commandes dashboard: {e}")

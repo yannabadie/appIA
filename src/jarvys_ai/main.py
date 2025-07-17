@@ -26,6 +26,8 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - JARVYS_AI - %(levelname)s - %(message)s",
 )
+import logging
+
 logger = logging.getLogger(__name__)
 
 
@@ -188,7 +190,7 @@ class JarvysAI:
             # Mettre à jour le jumeau numérique
             await self.digital_twin.update_interaction(command, response, interface)
 
-            return response
+            return _response
 
         except Exception as e:
             error_msg = f"❌ Erreur traitement commande: {e}"

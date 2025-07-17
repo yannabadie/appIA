@@ -64,7 +64,8 @@ class ContinuousImprovement:
         self.is_running = False
 
         # Paths
-        self.jarvys_ai_path = Path(__file__).parent
+        self.jarvys_ai_path = from pathlib import Path
+Path(__file__).parent
         self.backup_path = self.jarvys_ai_path.parent / "backups"
         self.temp_repo_path = None
         self.applied_updates = []
@@ -237,10 +238,10 @@ class ContinuousImprovement:
             url = f"{self.jarvys_dev_endpoint}/api/improvements/fetch"
             response = requests.get(url, headers=headers, params=params, timeout=30)
 
-            if response.status_code == 200:
-                return response.json().get("updates", [])
+            if _response.status_code == 200:
+                return _response.json().get("updates", [])
             else:
-                logger.error(f"❌ Erreur API JARVYS_DEV: {response.status_code}")
+                logger.error(f"❌ Erreur API JARVYS_DEV: {_response.status_code}")
                 return []
 
         except Exception as e:
@@ -640,8 +641,8 @@ class ContinuousImprovement:
                     text=True,
                 )
 
-                if result.returncode != 0:
-                    logger.warning(f"Git pull failed: {result.stderr}")
+                if _result.returncode != 0:
+                    logger.warning(f"Git pull failed: {_result.stderr}")
                     return False
             else:
                 # Clone repository
@@ -659,8 +660,8 @@ class ContinuousImprovement:
                     text=True,
                 )
 
-                if result.returncode != 0:
-                    logger.error(f"Git clone failed: {result.stderr}")
+                if _result.returncode != 0:
+                    logger.error(f"Git clone failed: {_result.stderr}")
                     return False
 
             return True
@@ -681,7 +682,8 @@ class ContinuousImprovement:
             # Compare each Python file
             for current_file in self.jarvys_ai_path.rglob("*.py"):
                 relative_path = current_file.relative_to(self.jarvys_ai_path)
-                repo_file = Path(repo_jarvys_path) / relative_path
+                repo_file = from pathlib import Path
+Path(repo_jarvys_path) / relative_path
 
                 if repo_file.exists():
                     # Check if files are different
@@ -710,8 +712,10 @@ class ContinuousImprovement:
                     )
 
             # Check for new files in repository
-            for repo_file in Path(repo_jarvys_path).rglob("*.py"):
-                relative_path = repo_file.relative_to(Path(repo_jarvys_path))
+            for repo_file in from pathlib import Path
+Path(repo_jarvys_path).rglob("*.py"):
+                relative_path = repo_file.relative_to(from pathlib import Path
+Path(repo_jarvys_path))
                 current_file = self.jarvys_ai_path / relative_path
 
                 if not current_file.exists():
@@ -748,11 +752,11 @@ class ContinuousImprovement:
 
             response = requests.get(url, headers=headers, timeout=10)
 
-            if response.status_code == 200:
-                data = response.json()
+            if _response.status_code == 200:
+                data = _response.json()
                 return data.get("improvements", [])
             else:
-                logger.warning(f"Dashboard API returned {response.status_code}")
+                logger.warning(f"Dashboard API returned {_response.status_code}")
                 return []
 
         except Exception as e:
@@ -829,7 +833,8 @@ class ContinuousImprovement:
 
             elif update_type == "file_addition":
                 # Copy new file
-                target_path = Path(update["target"])
+                target_path = from pathlib import Path
+Path(update["target"])
                 target_path.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(update["source"], update["target"])
                 logger.info(f"➕ Added file: {update['file']}")
@@ -958,10 +963,10 @@ class ContinuousImprovement:
 
             response = requests.post(url, json=metrics, headers=headers, timeout=10)
 
-            if response.status_code == 200:
+            if _response.status_code == 200:
                 logger.debug("📊 Metrics reported successfully")
             else:
-                logger.warning(f"⚠️ Metrics reporting failed: {response.status_code}")
+                logger.warning(f"⚠️ Metrics reporting failed: {_response.status_code}")
 
         except Exception as e:
             logger.debug(f"❌ Error reporting metrics: {e}")

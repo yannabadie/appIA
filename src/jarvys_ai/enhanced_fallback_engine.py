@@ -141,7 +141,7 @@ class EnhancedFallbackEngine:
         try:
             if not self.github_token:
                 # Simulate quota for demo
-                import random
+                import random  # Added missing import
 
                 usage = random.randint(20, 95)
                 return {
@@ -160,8 +160,8 @@ class EnhancedFallbackEngine:
             url = f"https://api.github.com/repos/{self.repo_owner}/{self.repo_name}/actions/billing/usage"
             response = requests.get(url, headers=headers, timeout=10)
 
-            if response.status_code == 200:
-                data = response.json()
+            if _response.status_code == 200:
+                data = _response.json()
                 total_minutes = data.get("total_minutes_used", 0)
                 included_minutes = data.get("included_minutes", 3000)
 
@@ -178,7 +178,7 @@ class EnhancedFallbackEngine:
                     "remaining_minutes": max(included_minutes - total_minutes, 0),
                 }
             else:
-                logger.warning(f"GitHub API returned {response.status_code}")
+                logger.warning(f"GitHub API returned {_response.status_code}")
                 return None
 
         except Exception as e:
@@ -251,8 +251,10 @@ class EnhancedFallbackEngine:
             deployment_dir = tempfile.mkdtemp(prefix="jarvys_deploy_")
 
             # Copy JARVYS_AI source code
-            jarvys_source = Path(__file__).parent
-            jarvys_target = Path(deployment_dir) / "jarvys_ai"
+            jarvys_source = from pathlib import Path
+Path(__file__).parent
+            jarvys_target = from pathlib import Path
+Path(deployment_dir) / "jarvys_ai"
 
             shutil.copytree(
                 jarvys_source,
@@ -329,7 +331,8 @@ EXPOSE $PORT
 CMD ["/app/start.sh"]
 """
 
-        dockerfile_path = Path(deployment_dir) / "Dockerfile"
+        dockerfile_path = from pathlib import Path
+Path(deployment_dir) / "Dockerfile"
         with open(dockerfile_path, "w") as f:
             f.write(dockerfile_content)
 
@@ -376,7 +379,8 @@ SERVICE_URL=$(gcloud run services describe $SERVICE_NAME --platform managed --re
 echo "🌐 Service URL: $SERVICE_URL"
 """
 
-        script_path = Path(deployment_dir) / "deploy_cloud_run.sh"
+        script_path = from pathlib import Path
+Path(deployment_dir) / "deploy_cloud_run.sh"
         with open(script_path, "w") as f:
             f.write(script_content)
         os.chmod(script_path, 0o755)
@@ -405,8 +409,8 @@ echo "🌐 Service URL: $SERVICE_URL"
                     timeout=300,
                 )
 
-                if result.returncode != 0:
-                    logger.error(f"Docker build failed: {result.stderr}")
+                if _result.returncode != 0:
+                    logger.error(f"Docker build failed: {_result.stderr}")
                     return False
 
                 # Push image
@@ -418,8 +422,8 @@ echo "🌐 Service URL: $SERVICE_URL"
                     timeout=300,
                 )
 
-                if result.returncode != 0:
-                    logger.error(f"Docker push failed: {result.stderr}")
+                if _result.returncode != 0:
+                    logger.error(f"Docker push failed: {_result.stderr}")
                     return False
 
                 # Deploy to Cloud Run
@@ -452,8 +456,8 @@ echo "🌐 Service URL: $SERVICE_URL"
                     deploy_cmd, capture_output=True, text=True, timeout=600
                 )
 
-                if result.returncode != 0:
-                    logger.error(f"Cloud Run deployment failed: {result.stderr}")
+                if _result.returncode != 0:
+                    logger.error(f"Cloud Run deployment failed: {_result.stderr}")
                     return False
 
                 logger.info("✅ Successfully deployed to Cloud Run")
@@ -538,10 +542,10 @@ echo "🌐 Service URL: $SERVICE_URL"
                 timeout=60,
             )
 
-            if result.returncode == 0:
+            if _result.returncode == 0:
                 logger.info("✅ Cloud Run service scaled down")
             else:
-                logger.warning(f"⚠️ Scale down warning: {result.stderr}")
+                logger.warning(f"⚠️ Scale down warning: {_result.stderr}")
 
         except Exception as e:
             logger.error(f"❌ Error scaling down service: {e}")
@@ -577,7 +581,7 @@ echo "🌐 Service URL: $SERVICE_URL"
                 timeout=10,
             )
 
-            if result.returncode == 0 and result.stdout.strip():
+            if _result.returncode == 0 and _result.stdout.strip():
                 logger.debug("✅ GCloud authentication verified")
                 return True
             else:
@@ -600,7 +604,7 @@ echo "🌐 Service URL: $SERVICE_URL"
                     text=True,
                     timeout=5,
                 )
-                if result.returncode == 0:
+                if _result.returncode == 0:
                     logger.debug(f"✅ {tool} available")
                 else:
                     logger.warning(f"⚠️ {tool} not available or not working")

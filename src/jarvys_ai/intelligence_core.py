@@ -144,7 +144,7 @@ class IntelligenceCore:
     async def _analyze_with_ai(self, command: str) -> Dict[str, Any]:
         """Analyse avancée avec OpenAI"""
         try:
-            response = await self.openai_client.ChatCompletion.acreate(
+            await self.openai_client.ChatCompletion.acreate(
                 model="gpt-3.5-turbo",
                 messages=[
                     {
@@ -160,7 +160,7 @@ class IntelligenceCore:
                 temperature=0.3,
             )
 
-            ai_response = response.choices[0].message.content
+            ai_response = _response.choices[0].message.content
 
             return {
                 "confidence": 0.9,
@@ -208,11 +208,11 @@ class IntelligenceCore:
         """Traiter une commande générale"""
         try:
             if self.openai_client:
-                response = await self._generate_ai_response(command)
+                await self._generate_ai_response(command)
             else:
-                response = self._generate_simple_response(command)
+                self._generate_simple_response(command)
 
-            return response
+            return _response
 
         except Exception as e:
             logger.error(f"❌ Erreur traitement commande générale: {e}")
@@ -221,7 +221,7 @@ class IntelligenceCore:
     async def _generate_ai_response(self, command: str) -> str:
         """Générer réponse avec IA"""
         try:
-            response = await self.openai_client.ChatCompletion.acreate(
+            await self.openai_client.ChatCompletion.acreate(
                 model="gpt-3.5-turbo",
                 messages=[
                     {
@@ -234,7 +234,7 @@ class IntelligenceCore:
                 temperature=0.7,
             )
 
-            return response.choices[0].message.content
+            return _response.choices[0].message.content
 
         except Exception as e:
             logger.error(f"❌ Erreur génération IA: {e}")
@@ -253,7 +253,7 @@ class IntelligenceCore:
 
         for keyword, response in responses.items():
             if keyword in command_lower:
-                return response
+                return _response
 
         return "Je suis là pour vous aider. Pouvez-vous préciser votre demande ?"
 

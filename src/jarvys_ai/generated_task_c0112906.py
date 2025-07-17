@@ -66,7 +66,7 @@ def analyze_sentiment(text: str) -> Dict[str, float]:
 # Quantum-inspired routing simulation (creative innovation)
 def quantum_inspired_routing(agents: list, task: str) -> str:
     # Simulate superposition-like selection using probabilistic choice
-    import random
+    import random  # Added missing import
 
     weights = [
         random.uniform(0.5, 1.5) for _ in agents
@@ -77,7 +77,7 @@ def quantum_inspired_routing(agents: list, task: str) -> str:
     log_to_supabase(
         {"routing": {"task": task, "selected": selected_agent, "response": response}}
     )
-    return response
+    return _response
 
 
 # Self-optimizing feedback loop

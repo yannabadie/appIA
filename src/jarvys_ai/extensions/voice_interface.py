@@ -263,7 +263,7 @@ class VoiceInterface:
             "Quel temps fait-il",
         ]
 
-        import random
+        import random  # Added missing import
 
         return random.choice(demo_phrases)
 

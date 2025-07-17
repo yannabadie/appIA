@@ -1,6 +1,6 @@
 import json
 import os
-import random
+import random  # Added missing import
 
 import supabase
 from google.cloud import pubsub_v1
@@ -62,7 +62,7 @@ class JARVYS_AI:
         # Self-improvement: Update metrics
         self.update_metrics(selected_llm, sentiment["score"])
 
-        return response
+        return _response
 
     def update_metrics(self, llm, score):
         if llm not in self.performance_metrics:

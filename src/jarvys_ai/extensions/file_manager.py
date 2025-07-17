@@ -236,7 +236,7 @@ class FileManager:
 
             response += "\n💡 Dites 'Ouvrir [nom fichier]' pour l'ouvrir."
 
-            return response
+            return _response
 
         except Exception as e:
             logger.error(f"❌ Erreur recherche fichiers: {e}")
@@ -270,7 +270,8 @@ class FileManager:
             if search_lower in filename:
                 results.append(
                     {
-                        "name": Path(file_info["path"]).name,
+                        "name": from pathlib import Path
+Path(file_info["path"]).name,
                         "path": file_info["path"],
                         "size": self._format_file_size(file_info["size"]),
                         "modified": file_info["modified"].strftime("%d/%m/%Y %H:%M"),
@@ -452,7 +453,7 @@ L'opération s'est déroulée avec succès."""
 
         response += "💡 Dites 'Ouvrir [nom]' pour ouvrir un fichier."
 
-        return response
+        return _response
 
     async def _handle_general_file_query(self, command: str) -> str:
         """Gérer requête générale fichiers"""
