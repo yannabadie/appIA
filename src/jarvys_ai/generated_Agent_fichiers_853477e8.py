@@ -30,24 +30,30 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE)
 credentials = service_account.Credentials.from_service_account_info(GCP_SA_JSON)
 gcp_client = storage.Client(credentials=credentials)
 
+
 # Fallback LLM hierarchy
 def get_llm():
     try:
         return ChatGroq(model="grok-4-0709", api_key=XAI_API_KEY)
     except Exception as e:
-        logger.warning(f"Grok-4-0709 failed: {e}. Falling back to ChatGPT-4 alternative.")
+        logger.warning(
+            f"Grok-4-0709 failed: {e}. Falling back to ChatGPT-4 alternative."
+        )
         # Placeholder for ChatGPT-4 (implement as needed)
         from langchain_openai import ChatOpenAI
+
         return ChatOpenAI(model="gpt-4")
     # Further fallback to Claude if needed (not implemented here)
+
 
 # Quantum-inspired routing simulation (simple probabilistic selection)
 def quantum_inspired_route(options: List[str], num_qubits: int = 3) -> str:
     """Simulate quantum superposition for routing decisions."""
-    state = np.array([1 / np.sqrt(2)] * (2 ** num_qubits))
+    state = np.array([1 / np.sqrt(2)] * (2**num_qubits))
     probs = np.abs(state) ** 2
     probs /= probs.sum()
     return np.random.choice(options, p=probs)
+
 
 class AgentFichiers:
     def __init__(self, bucket_name: str = "jarvys-files"):
@@ -64,43 +70,58 @@ class AgentFichiers:
             blob = self.bucket.blob(destination_blob_name)
             blob.upload_from_filename(file_path)
             logger.info(f"Uploaded {file_path} to {destination_blob_name}")
-            self._log_to_supabase("upload", {"file": destination_blob_name, "status": "success"})
+            self._log_to_supabase(
+                "upload", {"file": destination_blob_name, "status": "success"}
+            )
             return True
         except Exception as e:
             logger.error(f"Upload failed: {e}")
-            self._log_to_supabase("upload_error", {"file": destination_blob_name, "error": str(e)})
+            self._log_to_supabase(
+                "upload_error", {"file": destination_blob_name, "error": str(e)}
+            )
             return False
 
     def analyze_file(self, file_path: str) -> Dict[str, Any]:
         try:
-            with open(file_path, 'r') as f:
+            with open(file_path, "r") as f:
                 content = f.read()
-            
+
             # Sentiment analysis for user mood prediction
             sentiment = self.sentiment_analyzer.polarity_scores(content)
-            mood = "positive" if sentiment['compound'] > 0.05 else "negative" if sentiment['compound'] < -0.05 else "neutral"
-            
+            mood = (
+                "positive"
+                if sentiment["compound"] > 0.05
+                else "negative" if sentiment["compound"] < -0.05 else "neutral"
+            )
+
             # LLM analysis with quantum-inspired routing for enhancement suggestion
             chain = self.prompt_template | self.llm | self.parser
             insights = chain.invoke({"content": content})
-            
+
             # Proactive enhancement: Suggest quantum simulation if complex data detected
-            enhancements = ["Add sentiment-based routing", "Integrate quantum simulation for optimization"]
+            enhancements = [
+                "Add sentiment-based routing",
+                "Integrate quantum simulation for optimization",
+            ]
             if "complex" in insights.lower() or random.random() > 0.5:
                 selected_enh = quantum_inspired_route(enhancements)
                 insights += f"\nSuggested enhancement: {selected_enh}"
-            
+
             result = {"sentiment": sentiment, "mood": mood, "insights": insights}
             self._log_to_supabase("analysis", result)
             return result
         except Exception as e:
             logger.error(f"Analysis failed: {e}")
-            self._log_to_supabase("analysis_error", {"file": file_path, "error": str(e)})
+            self._log_to_supabase(
+                "analysis_error", {"file": file_path, "error": str(e)}
+            )
             return {"error": str(e)}
 
     def _log_to_supabase(self, event_type: str, data: Dict[str, Any]):
         try:
-            supabase.table("agent_logs").insert({"event_type": event_type, "data": data}).execute()
+            supabase.table("agent_logs").insert(
+                {"event_type": event_type, "data": data}
+            ).execute()
         except Exception as e:
             logger.error(f"Supabase logging failed: {e}")
 
@@ -112,6 +133,7 @@ class AgentFichiers:
         # Simulate commit/PR (placeholder for GitHub integration)
         logger.info("Generated self-improvement code:\n" + improvement_code)
         return improvement_code
+
 
 # Example usage (for testing in appIA)
 if __name__ == "__main__":

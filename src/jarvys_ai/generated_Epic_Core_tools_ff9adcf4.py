@@ -208,9 +208,7 @@ def analyze_sentiment(text):
     sentiment = (
         "positive"
         if analysis.sentiment.polarity > 0
-        else "negative"
-        if analysis.sentiment.polarity < 0
-        else "neutral"
+        else "negative" if analysis.sentiment.polarity < 0 else "neutral"
     )
     log_to_supabase("sentiment", {"text": text, "mood": sentiment})
     return sentiment
